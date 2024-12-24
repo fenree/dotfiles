@@ -1,0 +1,8 @@
+#!/bin/dash
+setxkbmap dk &
+xrandr --output DP-3 --mode 2560x1440 --rate 165 &
+xprop -root -f _NET_WM_NAME 32a -set _NET_WM_NAME LG3D &
+picom &
+feh --bg-fill ~/suckless/dwm/wallpapers/monochrome.png &
+~/suckless/dwm/scripts/bar.sh &
+dwm
