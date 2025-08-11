@@ -1,0 +1,2 @@
+#!/bin/dash
+mkdir -p $1 && xclip -selection clipboard -t image/png -o > $1$2.png

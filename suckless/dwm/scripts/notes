@@ -1,0 +1,13 @@
+#!/bin/dash
+
+nf="$HOME/Sync/md/dailies/$(date +%Y-%m-%d).md"
+
+if [ ! -f $nf ]; then
+	echo "# Notes for $(date +%Y-%m-%d)" > $nf
+fi
+
+nvim -c "norm Go" \
+	-c "norm Go## $(date +%H:%M)" \
+	-c "norm G2o" \
+	-c "norm zz" \
+	-c "startinsert" $nf

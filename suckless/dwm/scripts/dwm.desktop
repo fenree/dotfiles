@@ -1,5 +1,0 @@
-[Desktop Entry]
-Name=dwm
-Comment=dynamic window manager
-Exec=/home/zephyr/suckless/dwm/scripts/run
-Type=Application

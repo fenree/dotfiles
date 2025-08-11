@@ -1,0 +1,2 @@
+#!/bin/dash
+wak -f $HOME/suckless/fen-dwm/scripts/bar1.awk &

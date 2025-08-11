@@ -1,0 +1,10 @@
+#!/bin/dash
+export LD_PRELOAD=/lib64/libstdc++.so.6
+
+wmname LG3D
+if [ "$1" = "-emacs" ]; then
+    shift
+    exec "/usr/local/MATLAB/R2024b/bin/matlab" -nosplash -nodesktop "$@"
+else
+    exec "/usr/local/MATLAB/R2024b/bin/matlab" "$@"
+fi
