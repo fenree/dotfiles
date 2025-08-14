@@ -21,7 +21,7 @@ static const char *colors[][3] = {
 
 static const char *const autostart[] = {
     "wmname", "LG3D", NULL,
-	"/usr/local/bin/hsetroot", "-cover", "/home/zephyr/suckless/fen-dwm/wallpapers/catppuccin_triangle.png", NULL,
+	"/usr/local/bin/hsetroot", "-cover", "/home/zephyr/suckless/dwm/wallpapers/catppuccin_triangle.png", NULL,
     NULL /* terminate */
 };
 
@@ -32,16 +32,17 @@ static const char *tags[] = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
 /* NOTE: set to 0 to set to default (whitespace) */
 static char outer_separator_beg      = '[';
 static char outer_separator_end      = ']';
-static char inner_separator          = ' ';
+static char inner_separator          = '|';
 static unsigned truncate_icons_after = 4; /* will default to 1, that is the min */
 static char truncate_symbol[]       = "...";
 
 static Rule rules[] = {
     /* class      instance    title       tags mask     isfloating   monitor */
     {"note_window", NULL, NULL, 0, 0, -1, NULL},
-	{"st", NULL, NULL, 0, 0, -1, "S"},
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1,         NULL },
+	{"xterm-kitty", NULL, NULL, 0, 0, -1, "S"},
+	{ "Gimp", NULL, NULL, 0, 1,           -1,         NULL },
     { "Firefox",  NULL,       NULL,       1 << 8,       0,           -1,         "󰈹"  },
+	{ "zen-twilight",  NULL,       NULL,       1 << 8,       0,           -1,         "󰈹"  },
 	{"MATLAB R2024b - academic use", NULL, "Figure 1", 0, 1, -1, NULL},
     {"MATLAB R2024b - academic use", NULL, "Figure 2", 0, 1, -1, NULL},
     {"MATLAB R2024b - academic use", NULL, "Figure 3", 0, 1, -1, NULL},

@@ -964,22 +964,25 @@ drawbar(Monitor *m)
 		return;
 
 	/* draw status first so it can be overdrawn by tags later */
-	if (m == selmon) { /* status is only drawn on selected monitor */
+	if (m == selmon)  /* status is only drawn on selected monitor */
 		tw = m->ww - drawstatusbar(m, bh, stext);
+	
+	for (int i = 0; i < LENGTH(tags); i++) {
+		if (m->tag_icons[i]) {
+			free(m->tag_icons[i]);
+		}
+		m->tag_icons[i] = strndup(tags[i], strlen(tags[i]));
 	}
-
     int icons_per_tag[LENGTH(tags)];
     memset(icons_per_tag, 0, LENGTH(tags) * sizeof(int));
 
-    for (int i = 0; i < LENGTH(tags); i++) {
-        /* set each tag to default value */
-        m->tag_icons[i] = strndup(tags[i], strlen(tags[i]));
-    }
+//	for (int i = 0; i < LENGTH(tags); i++) 
+//		m->tag_icons[i] = strndup(tags[i], strlen(tags[i]));
 
 	for (c = m->clients; c; c = c->next) {
-        if (c->appicon && strlen(c->appicon) > 0) {
+        if (c->appicon && strlen(c->appicon) > 0) 
             applyappicon(m->tag_icons, icons_per_tag, c);
-        }
+        
 
 		occ |= c->tags;
 		if (c->isurgent)
