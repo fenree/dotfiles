@@ -27,18 +27,6 @@ static const char *const autostart[] = {
 
 /* tagging */
 static const char *tags[] = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
-static const char *tagsel[][2] = {
-	{ "#11111B", "#F28FAD" },
-	{ "#11111B", "#FAB387" },
-	{ "#11111B", "#ABE9B3" },
-	{ "#11111B", "#96CDFB" },
-	{ "#11111B", "#CBA6F7" },
-	{ "#11111B", "#96CDFB" },
-	{ "#11111B", "#ABE9B3" },
-	{ "#11111B", "#FAB387" },
-	{ "#11111B", "#F28FAD" },
-};
-
 
 /* appicons */
 /* NOTE: set to 0 to set to default (whitespace) */
