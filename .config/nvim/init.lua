@@ -1,9 +1,9 @@
 -- HELPERS --
 local v = vim.opt
 local c = vim.cmd
-local function nm(x, y) vim.api.nvim_set_keymap('n', x, y, {silent = true}) end
-local function im(x, y) vim.api.nvim_set_keymap('i', x, y, {silent = true}) end
-local function vm(x, y) vim.api.nvim_set_keymap('v', x, y, {silent = true}) end
+local function nm(x, y) vim.api.nvim_set_keymap('n', x, y, {silent = true, noremap = true}) end
+local function im(x, y) vim.api.nvim_set_keymap('i', x, y, {silent = true, noremap = true}) end
+local function vm(x, y) vim.api.nvim_set_keymap('v', x, y, {silent = true, noremap = true}) end
 
 -- PLUGINS --
 vim.pack.add({
@@ -29,7 +29,7 @@ require 'snacks' .setup {
 		force = false,
 		doc = {
 			enabled = true,
-			inline = false,
+			inline = true,
 			-- render the image in a floating window
 			-- only used if `opts.inline` is disabled
 			float = true,
@@ -106,9 +106,27 @@ nm('<leader>pf',':Pick files<CR>')
 nm('<leader>ph',':Pick help<CR>')
 nm('<leader>mm',':make<CR>')
 
+local table = {
+  ['('] = ')',
+  ['['] = ']',
+  ['{'] = '}',
+  ['<'] = '>',
+  ['"'] = '"',
+  ["'"] = "'"
+}
+
+for x, y in pairs(table) do
+  im(x, x .. y .. '<Left>')
+  im(x .. '<BS>', x)
+end
+
+im('<Tab>', '<Esc>/[)\\}"\'>]<CR>a')
+im('<S-Tab>', '<Esc>?[([{"\'<]<CR>a')
+
 -- OPTIONS --
 v.autoindent     = true
 v.autoread       = true
+v.conceallevel   = 2
 v.formatoptions  = cnm
 v.swapfile       = false
 v.relativenumber = true
