@@ -1,9 +1,15 @@
 -- HELPERS --
-local v = vim.opt
+local vo = vim.opt
 local c = vim.cmd
-local function nm(x, y) vim.api.nvim_set_keymap('n', x, y, {silent = true, noremap = true}) end
-local function im(x, y) vim.api.nvim_set_keymap('i', x, y, {silent = true, noremap = true}) end
-local function vm(x, y) vim.api.nvim_set_keymap('v', x, y, {silent = true, noremap = true}) end
+local m = vim.api.nvim_set_keymap
+local o_snr = {silent = true, noremap = true}
+local o_sr = {silent = true}
+local function nm(x, y) m('n', x, y, o_snr) end
+local function im(x, y) m('i', x, y, o_snr) end
+local function vm(x, y) m('v', x, y, o_snr) end
+local function nmr(x, y) m('n', x, y, o_sr) end
+local function imr(x, y) m('i', x, y, o_sr) end
+local function vmr(x, y) m('v', x, y, o_sr) end
 
 -- PLUGINS --
 vim.pack.add({
@@ -105,6 +111,7 @@ nm('<leader>fc',':e ~/.config/nvim/init.lua<CR>')
 nm('<leader>pf',':Pick files<CR>')
 nm('<leader>ph',':Pick help<CR>')
 nm('<leader>mm',':make<CR>')
+nm('<ESC>',':nohlsearch<CR>')
 
 local table = {
   ['('] = ')',
@@ -120,20 +127,20 @@ for x, y in pairs(table) do
   im(x .. '<BS>', x)
 end
 
-im('<Tab>', '<Esc>/[)\\}"\'>]<CR>a')
-im('<S-Tab>', '<Esc>?[([{"\'<]<CR>a')
+imr('<Tab>', '<Esc>/[)\\}"\'>]<CR><ESC>a')
+imr('<S-Tab>', '<Esc>?[([{"\'<]<CR><ESC>a')
 
 -- OPTIONS --
-v.autoindent     = true
-v.autoread       = true
-v.conceallevel   = 2
-v.formatoptions  = cnm
-v.swapfile       = false
-v.relativenumber = true
-v.shiftwidth     = 4
-v.softtabstop    = 4
-v.tabstop        = 4
-v.winborder      = "rounded"
+vo.autoindent     = true
+vo.autoread       = true
+vo.conceallevel   = 2
+vo.formatoptions  = cnm
+vo.swapfile       = false
+vo.relativenumber = true
+vo.shiftwidth     = 4
+vo.softtabstop    = 4
+vo.tabstop        = 4
+vo.winborder      = "rounded"
 
 c("colorscheme catppuccin")
 c(":hi statusline guibg=NONE")
