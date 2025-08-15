@@ -1,12 +1,11 @@
 defaults.pcm.card 1
 defaults.ctl.card 1
 
-# Your existing dmixer for playback (headset)
 pcm.dmixer {
     type dmix
     ipc_key 1024
     slave {
-        pcm "hw:1,0"    # headset
+        pcm "hw:1,0"
         rate 48000
         channels 2
         format S16_LE
@@ -15,19 +14,17 @@ pcm.dmixer {
     }
 }
 
-# Add capture for microphone
 pcm.dsnooper {
     type dsnoop
     ipc_key 2048
     slave {
-        pcm "hw:0,0"    # microphone
+        pcm "hw:0,0"
         channels 1
         rate 48000
         format S16_LE
     }
 }
 
-# Combine them
 pcm.duplex {
     type asym
     playback.pcm "dmixer"
