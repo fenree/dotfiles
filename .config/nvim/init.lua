@@ -2,8 +2,12 @@
 local vo = vim.opt
 local c = vim.cmd
 local m = vim.api.nvim_set_keymap
+local a = vim.api.nvim_create_autocmd
+local fn = vim.fn
+local fs = vim.fs
 local o_snr = {silent = true, noremap = true}
 local o_sr = {silent = true}
+
 local function nm(x, y) m('n', x, y, o_snr) end
 local function im(x, y) m('i', x, y, o_snr) end
 local function vm(x, y) m('v', x, y, o_snr) end
@@ -15,14 +19,12 @@ local function vmr(x, y) m('v', x, y, o_sr) end
 vim.pack.add({
 	{ src = "https://github.com/catppuccin/nvim"},
 	{ src = "https://github.com/chomosuke/typst-preview.nvim"},
-	{ src = "https://github.com/echasnovski/mini.files"},
-	{ src = "https://github.com/echasnovski/mini.pick"},
+	{ src = "https://github.com/stevearc/oil.nvim"},
 	{ src = "https://github.com/folke/snacks.nvim"},
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
 })
 
-require 'mini.files'.setup()
-require 'mini.pick'.setup()
+require 'oil'.setup()
 require 'snacks' .setup {
 	image = {
 		formats = {
@@ -104,12 +106,27 @@ vim.treesitter.language.register('markdown_inline', 'md')
 vim.treesitter.language.register('python', 'py')
 vim.treesitter.language.register('json', 'json')
 
+-- OPTIONS --
+vo.autoindent     = true
+vo.autoread       = true
+vo.conceallevel   = 2
+vo.formatoptions  = cnm
+vo.swapfile       = false
+vo.relativenumber = true
+vo.shiftwidth     = 4
+vo.softtabstop    = 4
+vo.tabstop        = 4
+vo.winborder      = "rounded"
+
+c("colorscheme catppuccin")
+c(":hi statusline guibg=NONE")
+
 -- KEYS --
 vim.g.mapleader = " "
 
 nm('<leader>fc',':e ~/.config/nvim/init.lua<CR>')
-nm('<leader>pf',':Pick files<CR>')
-nm('<leader>ph',':Pick help<CR>')
+nm('-', '<CMD>Oil<CR>')
+
 nm('<leader>mm',':make<CR>')
 nm('<ESC>',':nohlsearch<CR>')
 
@@ -130,17 +147,19 @@ end
 imr('<Tab>', '<Esc>/[)\\}"\'>]<CR><ESC>a')
 imr('<S-Tab>', '<Esc>?[([{"\'<]<CR><ESC>a')
 
--- OPTIONS --
-vo.autoindent     = true
-vo.autoread       = true
-vo.conceallevel   = 2
-vo.formatoptions  = cnm
-vo.swapfile       = false
-vo.relativenumber = true
-vo.shiftwidth     = 4
-vo.softtabstop    = 4
-vo.tabstop        = 4
-vo.winborder      = "rounded"
 
-c("colorscheme catppuccin")
-c(":hi statusline guibg=NONE")
+-- AUTO CMDS -- 
+local root_markers = { '.git', '.clangd', 'Makefile'}
+
+local project_type = ''
+
+a("BufEnter", {
+  callback = function()
+    local r = fs.find(root_markers, { upward = true })[1]
+    if r then 
+			fn.chdir(fs.dirname(r))
+	end
+  end
+})
+
+
