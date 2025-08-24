@@ -1,0 +1,41 @@
+#!/bin/dash
+
+PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin
+
+echo "Started Suckless init..."
+
+echo "Mounting everything in /etc/fstab..."
+mount -a -O no_netdev
+
+echo "Preparing ttys..."
+# if user is using initramfs these will already be here so we just ensure perms are correct
+cd /dev
+
+chmod 620 tty1     || mknod -m 620 tty1 c 4 1
+chmod 666 tty      || mknod -m 666 tty c 5 0
+chmod 660 kmsg     || mknod -m 660 kmsg c 1 11
+
+chmod 660 dri/card1
+chown root:video dri/card1
+
+mkdir -p pts shm
+mountpoint -q pts || mount -t devpts devpts pts -o mode=0620,gid=5
+mountpoint -q shm || mount -t tmpfs tmpfs shm
+cd ..
+
+#echo "Creating device nodes"
+#/bin/uevent /bin/mdev & 
+#/bin/mdev -s
+
+ls -la >> /var/rc.log
+echo "Enabling swap..."
+/bin/swapon -a
+
+echo "Setting up network interfaces"
+modprobe r8169
+ip addr add 192.168.0.3/24 dev eth0
+ip link set eth0 up
+ip route add default via 192.168.0.1
+
+exec /bin/getty 38400 tty1 -l /bin/login
+
