@@ -1,0 +1,8 @@
+Completion:
+  AllScopes: Yes
+  ArgumentLists: FullPlaceholders
+  HeaderInsertion: IWYU
+  CodePatterns: All
+
+Diagnostics:
+  UnusedIncludes: Strict
