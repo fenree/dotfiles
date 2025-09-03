@@ -1,10 +1,12 @@
+which doas && sudo=doas || sudo=sudo
+
 alias in='yay -S'
 alias un='yay -Rdd'
 alias upd='yay -Syu'
 alias ss='yay -Ss'
 alias mci='make clean && make -j20 -l5 && sudo make install'
 alias idf='source /home/zephyr/src/esp-idf/export.sh'
-alias prm='sudo chmod +x'
+alias prm='$sudo chmod +x'
 alias lp='pacman -Qqe'
 
 alias fdpid="ps a --noheaders | dmenu | awk '{print $1}'"
