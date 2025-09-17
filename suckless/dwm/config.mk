@@ -17,7 +17,7 @@ LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS}
 
 # flags
 CPPFLAGS += -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE=700L -DVERSION=\"${VERSION}\" ${XINERAMAFLAGS}
-CFLAGS   += -std=c99 -pedantic -Wall -Wno-deprecated-declarations -O3 -march=native -mtune=native -fomit-frame-pointer -fno-semantic-interposition -fdata-sections -ffunction-sections ${INCS} ${CPPFLAGS}
+CFLAGS   += -std=c99 -pedantic -Wall -Wno-deprecated-declarations -O2 -march=native -mtune=native -fomit-frame-pointer -fno-semantic-interposition -fdata-sections -ffunction-sections ${INCS} ${CPPFLAGS}
 LDFLAGS  += ${LIBS} -s -Wl,--gc-sections,--strip-all
 
 

@@ -974,14 +974,13 @@ void drawbar(Monitor *m) {
   x = 0;
   for (i = 0; i < LENGTH(tags); i++) {
     w = TEXTW(m->tag_icons[i]);
-    if ((m->tagset[m->seltags] & 1 << i)) {
-      currscheme = tagscheme[i];
-      drw_setscheme(drw, currscheme);
-    } else {
-      drw_setscheme(drw, scheme[SchemeNorm]);
-    }
+    // get the tag scheme (extract from ternary. will need explicit if
+    // statement)
+    // store tagscheme in variable
+    currscheme =
+        ((m->tagset[m->seltags] & 1 << i) ? tagscheme[i] : scheme[SchemeNorm]);
+    drw_setscheme(drw, currscheme);
     drw_text(drw, x, 0, w, bh, lrpad / 2, m->tag_icons[i], urg & 1 << i);
-
     if (occ & 1 << i && icons_per_tag[i] == 0)
       drw_rect(drw, x + boxs, boxs, boxw, boxw,
                m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
@@ -995,9 +994,9 @@ void drawbar(Monitor *m) {
 
   if ((w = m->ww - tw - x) > bh) {
     if (m->sel) {
-      drw_setscheme(drw, m == selmon ? currscheme : scheme[SchemeSel]);
+      // client text | SchemeSel must be stored tagscheme from ~20 lines ago
+      drw_setscheme(drw, m == selmon ? scheme[SchemeSel] : currscheme);
       drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
-
       if (m->sel->isfloating)
         drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
     } else {
@@ -1055,8 +1054,7 @@ void focus(Client *c) {
     detachstack(c);
     attachstack(c);
     grabbuttons(c, 1);
-
-    XSetWindowBorder(dpy, c->win, currscheme[1].pixel);
+    XSetWindowBorder(dpy, c->win, scheme[SchemeSel][ColBorder].pixel);
     setfocus(c);
   } else {
     XSetInputFocus(dpy, root, RevertToPointerRoot, CurrentTime);
