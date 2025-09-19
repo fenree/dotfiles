@@ -42,25 +42,26 @@ static unsigned truncate_icons_after = 3; /* will default to 1, that is the min 
 static char truncate_symbol[] = "...";
 
 static Rule rules[] = {
-    /* class      instance    title       tags mask     isfloating   monitor */
-    {"xterm-kitty", NULL, "st", 0, 0, -1, ""},
-    {"xterm-kitty", NULL, "tmux", 0, 0, -1, ""},
-    {"xterm-kitty", NULL, "nvim", 0, 1, -1, ""},
-    {"xterm-kitty", NULL, "float", 0, 1, -1, ""},
-    {"Kicad", NULL, NULL, 0, 1, -1, ""},
-    {"Firefox", NULL, NULL, 1 << 1, 0, -1, "󰈹"},
-    {"zen-twilight", NULL, NULL, 1 << 1, 0, -1, "󰈹"},
-    {"vesktop", NULL, NULL, 0, 0, -1, ""},
-    {"zoom", NULL, NULL, 0, 0, -1, "󰰸"},
-    {"MATLAB R2024b - academic use", NULL, "Figure 1", 0, 1, -1, ""},
-    {"MATLAB R2024b - academic use", NULL, "Figure 2", 0, 1, -1, ""},
-    {"MATLAB R2024b - academic use", NULL, "Figure 3", 0, 1, -1, ""},
-    {"MATLAB R2024b - academic use", NULL, "Figure 4", 0, 1, -1, ""},
-    {"MATLAB R2024b - academic use", NULL, "Figure 5", 0, 1, -1, ""},
-    {"MATLAB R2024b - academic use", NULL, "Figure 6", 0, 1, -1, ""},
-    {"MATLAB R2024b - academic use", NULL, "Figure 7", 0, 1, -1, ""},
-    {"MATLAB R2024b - academic use", NULL, "Figure 8", 0, 1, -1, ""},
-    {"MATLAB R2024b - academic use", NULL, "Figure 9", 0, 1, -1, ""},
+    /* class      instance    title       tags mask   iscentered    isfloating   monitor   icon */
+    {"xterm-kitty",  NULL,  "st",  0, 0,  0,  -1,  ""},
+    {"xterm-kitty",  NULL,  "tmux",  0, 0,  0,  -1,  ""},
+    {"xterm-kitty",  NULL,  "float",  0, 1,  1,  -1,  ""},
+    {"Kicad",  NULL,  NULL,  0, 0,  0,  -1,  ""},
+    {"Firefox",  NULL,  NULL,  1 << 1, 0,  0,  -1,  "󰈹"},
+    {"zen-twilight",  NULL,  NULL,  1 << 1, 0,  0,  -1,  "󰈹"},
+    {"qutebrowser",  NULL,  NULL,  1 << 1, 0,  0,  -1,  ""},
+    {"mpv",  NULL,  NULL,  1 << 1, 1,  1,  -1,  "󰐎"},
+    {"vesktop",  NULL,  NULL,  0, 0,  0,  -1,  ""},
+    {"zoom",  NULL,  NULL,  0, 0,  0,  -1,  "󰰸"},
+    {"MATLAB R2024b - academic use",  NULL,  "Figure 1",  0, 0,  1,  -1,  ""},
+    {"MATLAB R2024b - academic use",  NULL,  "Figure 2",  0, 0,  1,  -1,  ""},
+    {"MATLAB R2024b - academic use",  NULL,  "Figure 3",  0, 0,  1,  -1,  ""},
+    {"MATLAB R2024b - academic use",  NULL,  "Figure 4",  0, 0,  1,  -1,  ""},
+    {"MATLAB R2024b - academic use",  NULL,  "Figure 5",  0, 0,  1,  -1,  ""},
+    {"MATLAB R2024b - academic use",  NULL,  "Figure 6",  0, 0,  1,  -1,  ""},
+    {"MATLAB R2024b - academic use",  NULL,  "Figure 7",  0, 0,  1,  -1,  ""},
+    {"MATLAB R2024b - academic use",  NULL,  "Figure 8",  0, 0,  1,  -1,  ""},
+    {"MATLAB R2024b - academic use",  NULL,  "Figure 9",  0, 0,  1,  -1,  ""},
 };
 /* layout(s) */
 static const float mfact = 0.50; /* factor of master area size [0.05..0.95] */
