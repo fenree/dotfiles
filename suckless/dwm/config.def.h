@@ -102,6 +102,7 @@ static const char *dmenucmd[] = {
     "dmenu_run", "-m",      dmenumon, "-fn",    dmenufont, "-nb",     col_black,
     "-nf",       col_white, "-sb",    col_mauve, "-sf",     col_white, NULL};
 static const char *termcmd[] = { "st", "-e", "tmux", NULL};
+static const char *edcmd[] = {"st", "-t", "float", "-e", "nvim", NULL};
 //static const char *edcmd[] = {"dash","-c","\"([","-e","/bin/tmux","]","&&","st","-e","tmux","-c","nvim",")","||","st","-e","nvim\"",NULL};
 
 static const char *browsercmd[] = {"qutebrowser", NULL};
@@ -111,7 +112,7 @@ static const Key keys[] = {
     {MODKEY, XK_p, spawn, {.v = dmenucmd}},
     {WINKEY | ShiftMask, XK_s, spawn, CMD(SCRIPT(ss))},
     {MODKEY | ShiftMask, XK_Return, spawn, {.v = termcmd}},
-    //{MODKEY, XK_e, spawn, {.v = edcmd}},
+    {MODKEY, XK_e, spawn, {.v = edcmd}},
     {MODKEY, XK_b, spawn, CMD("qutebrowser")},
 	{MODKEY, XK_v, spawn, CMD(SCRIPT(vied))},
     //{MODKEY, XK_b, togglebar, {0}},
