@@ -51,7 +51,10 @@ static Rule rules[] = {
     {"zen-twilight",  NULL,  NULL,  1 << 1, 0,  0,  -1,  "󰈹"},
     {"qutebrowser",  NULL,  NULL,  1 << 1, 0,  0,  -1,  ""},
     {"mpv",  NULL,  NULL,  1 << 1, 1,  1,  -1,  "󰐎"},
+    {"com-st-microxplorer-maingui-STM32CubeMX",  NULL,  NULL,  0, 1,  1,  -1,  "ST"},
+
     {"vesktop",  NULL,  NULL,  0, 0,  0,  -1,  ""},
+	{"Zathura", NULL, NULL, 0, 0, 0, -1, ""},
     {"zoom",  NULL,  NULL,  0, 0,  0,  -1,  "󰰸"},
     {"MATLAB R2024b - academic use",  NULL,  "Figure 1",  0, 0,  1,  -1,  ""},
     {"MATLAB R2024b - academic use",  NULL,  "Figure 2",  0, 0,  1,  -1,  ""},
@@ -103,7 +106,6 @@ static const char *dmenucmd[] = {
     "-nf",       col_white, "-sb",    col_mauve, "-sf",     col_white, NULL};
 static const char *termcmd[] = { "st", "-e", "tmux", NULL};
 static const char *edcmd[] = {"st", "-t", "float", "-e", "nvim", NULL};
-//static const char *edcmd[] = {"dash","-c","\"([","-e","/bin/tmux","]","&&","st","-e","tmux","-c","nvim",")","||","st","-e","nvim\"",NULL};
 
 static const char *browsercmd[] = {"qutebrowser", NULL};
 
@@ -111,6 +113,7 @@ static const Key keys[] = {
     /* modifier                     key        function        argument */
     {MODKEY, XK_p, spawn, {.v = dmenucmd}},
     {WINKEY | ShiftMask, XK_s, spawn, CMD(SCRIPT(ss))},
+	{MODKEY, XK_v, spawn, CMD(SCRIPT(vim-everywhere))},
     {MODKEY | ShiftMask, XK_Return, spawn, {.v = termcmd}},
     {MODKEY, XK_e, spawn, {.v = edcmd}},
     {MODKEY, XK_b, spawn, CMD("qutebrowser")},

@@ -1,0 +1,8 @@
+#!/bin/dash
+TMPFILE=$(mktemp)
+st -t "float" -e nvim "$TMPFILE"
+if [ -s "$TMPFILE" ]; then
+	sleep 0.1
+	cat "$TMPFILE" | tr \\n \\r | xdotool getwindowfocus type --clearmodifiers --delay 5 --file -
+fi
+rm "$TMPFILE"
