@@ -9,7 +9,7 @@ application/x-extension-shtml=zen-twilight.desktop
 application/xhtml+xml=zen-twilight.desktop
 application/x-extension-xhtml=zen-twilight.desktop
 application/x-extension-xht=zen-twilight.desktop
-x-scheme-handler/discord=vesktop.desktop   
+x-scheme-handler/discord=vesktop.desktop
 application/pdf=org.pwmt.zathura-pdf-mupdf.desktop
 
 [Added Associations]

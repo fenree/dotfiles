@@ -769,7 +769,9 @@ Monitor *dirtomon(int dir) {
 }
 
 int drawstatusbar(Monitor *m, int bh, char *stext) {
-  int ret, i, w, x, len;
+  int ret, x, len;
+  int w = 0;
+  int i = -1;
   short isCode = 0;
   char *text;
   char *p;
@@ -781,8 +783,6 @@ int drawstatusbar(Monitor *m, int bh, char *stext) {
   memcpy(text, stext, len);
 
   /* compute width of the status text */
-  w = 0;
-  i = -1;
   while (text[++i]) {
     if (text[i] == '^') {
       if (!isCode) {

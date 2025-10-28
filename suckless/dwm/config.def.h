@@ -10,11 +10,12 @@ static const int vertpadbar = 3;        /* vertical padding for statusbar */
 static const char *fonts[] = {"IosevkaNerdFontMono:size=24"};
 static const char dmenufont[] = "IosevkaNerdFontMono:size=20";
 static const char col_black[] = "#11111B";
+static const char col_base[] = "#1E1E2E";
 static const char col_white[] = "#D9E0EE";
 static const char col_mauve[] = "#CBA6F7"; 
 static const char *colors[][3] = {
     /*               fg         bg         border   */
-    [SchemeNorm] = {col_white, col_black, col_black},
+    [SchemeNorm] = {col_white, col_black, col_base},
     [SchemeSel] = {col_black, col_white, col_mauve},
 };
 
