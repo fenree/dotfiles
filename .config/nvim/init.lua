@@ -29,11 +29,9 @@ local function bvm(x, y) m('v', x, y, o_snr) end
 vim.pack.add({
 	{ src = "https://github.com/Saghen/blink.cmp"},
 	{ src = "https://github.com/catppuccin/nvim"},
-	{ src = "https://github.com/chomosuke/typst-preview.nvim"},
 	{ src = "https://github.com/folke/snacks.nvim"},
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
 	{ src = "https://github.com/neovim/nvim-lspconfig"},
---	{ src = "https://github.com/stevearc/oil.nvim"},
 	{ src = "https://github.com/luukvbaal/nnn.nvim"},
 	{ src = "https://github.com/rafamadriz/friendly-snippets"}
 })
@@ -124,13 +122,12 @@ lsc('luals', {
 })
 lse('luals')
 
-
-
 -- OPTIONS --
 vo.autoindent     = true
 vo.autoread       = true
 vo.conceallevel   = 2
 vo.concealcursor  = 'n'
+vo.diffopt        = "internal,filler,closeoff,indent-heuristic,inline:char,linematch:40,vertical"
 vo.foldmethod     = 'expr'
 vo.foldexpr       = 'nvim_treesitter#foldexpr()'
 vo.foldenable     = false
@@ -147,9 +144,9 @@ c.colorscheme("catppuccin")
 hl(0, "LineNrAbove", { fg = "#89dceb" })
 hl(0, "LineNrBelow", { fg = "#89dceb" })
 hl(0, "LineNr", { fg = "#fab387" })
-hl(0, "Normal", { bg = "none" })
+--hl(0, "Normal", { bg = "1e1e2e" })
 hl(0, "NormalFloat", { bg = "none" })
-hl(0, "StatusLine", { bg = "none" })
+--hl(0, "StatusLine", { bg = "1e1e2e" })
 
 -- keys --
 vim.g.mapleader = " "
@@ -200,7 +197,6 @@ end
 
 imr('<Tab>', '<Esc>/[)\\}"\'>]<CR><ESC>a')
 imr('<S-Tab>', '<Esc>?[([{"\'<]<CR><ESC>a')
-
 
 -- AUTO CMDS -- 
 local root_markers = { '.git', '.clangd', 'Makefile'}
