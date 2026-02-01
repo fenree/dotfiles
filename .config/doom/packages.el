@@ -3,37 +3,38 @@
 
 ;; To install a package with Doom you must declare them here and run 'doom sync'
 ;; on the command line, then restart Emacs for the changes to take effect -- or
-; org presentations
-;(package! catppuccin-theme)
-(package! org-present)
+                                        ; org presentations
+                                        ;(package! catppuccin-theme)
+                                        ;(package! org-present)
 
 (package! visual-fill-column)
+(package! ox-gfm)
 
-(defun my/org-present-start ()
-  (setq visual-fill-column-width 110)
-  (setq visual-fill-column-center-text t)
-  (visual-fill-column-mode 1)
-  (visual-line-mode 1)
-  (visual-line-fill-column-mode 1)
-  (setq header-line-format " ")
-  (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
-                                   (header-line (:height 4.0) variable-pitch)
-                                   (org-document-title (:height 1.75) org-document-title)
-                                   (org-code (:height 1.55) org-code)
-                                   (org-verbatim (:height 1.55) org-verbatim)
-                                   (org-block (:height 1.25) org-block)
-                                   (org-block-begin-line (:height 0.7) org-block))))
-
-(defun my/org-present-end ()
-  (visual-fill-column-mode 0)
-  (visual-line-mode 0)
-  (visual-line-fill-column-mode 0)
-  (setq header-line-format nil)
-  (setq-local face-remapping-alist '((default variable-pitch default)))
-)
-
-(add-hook 'org-present-mode-hook 'my/org-present-start)
-(add-hook 'org-present-mode-quit-hook 'my/org-present-end)
+                                        ;(defun my/org-present-start ()
+                                        ;(setq visual-fill-column-width 110)
+                                        ;(setq visual-fill-column-center-text t)
+                                        ;(visual-fill-column-mode 1)
+                                        ;(visual-line-mode 1)
+                                        ;(visual-line-fill-column-mode 1)
+                                        ;(setq header-line-format " ")
+                                        ;(setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
+                                        ;(header-line (:height 4.0) variable-pitch)
+                                        ;(org-document-title (:height 1.75) org-document-title)
+                                        ;(org-code (:height 1.55) org-code)
+                                        ;(org-verbatim (:height 1.55) org-verbatim)
+                                        ;(org-block (:height 1.25) org-block)
+                                        ;(org-block-begin-line (:height 0.7) org-block))))
+                                        ;
+                                        ;(defun my/org-present-end ()
+                                        ;(visual-fill-column-mode 0)
+                                        ;(visual-line-mode 0)
+                                        ;(visual-line-fill-column-mode 0)
+                                        ;(setq header-line-format nil)
+                                        ;(setq-local face-remapping-alist '((default variable-pitch default)))
+                                        ;)
+                                        ;
+                                        ;(add-hook 'org-present-mode-hook 'my/org-present-start)
+                                        ;(add-hook 'org-present-mode-quit-hook 'my/org-present-end)
 
 
 

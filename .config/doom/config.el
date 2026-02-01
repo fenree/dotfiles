@@ -17,39 +17,44 @@
 ;;   presentations or streaming.
 ;; - `doom-symbol-font' -- for symbols
 ;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
-;(setenv "PLANTUML_INCLUDE_PATH" (expand-file-name "~/.plantuml"))
-;(setq doom-font (font-spec :family "IosevkaNerdFontMono" :size 24))
-(set-face-attribute 'default nil :font "IosevkaNerdFontMono" :weight 'light :height 240)
-(set-face-attribute 'fixed-pitch nil :font "IosevkaNerdFontMono" :weight 'light :height 260)
-(set-face-attribute 'variable-pitch nil :font "IosevkaNerdFont" :weight 'light :height 1.6)
-;(custom-set-faces
- ;'(default ((t (:background "#11111B" :foreground "#D9E0EE")))))
- ;'(mode-line ((t (:background )))))  ;; Customize background to Catppuccin Mocha
-;; See 'C-h v doom-font' for documentation and more examples of what they
-;; accept. For example:
-;;
-;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
-;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
-;;
-;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
-;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
-;; refresh your font settings. If Emacs still can't find your font, it likely
-;; wasn't installed correctly. Font issues are rarely Doom issues!
+                                        ;(setenv "PLANTUML_INCLUDE_PATH" (expand-file-name "~/.plantuml"))
+(setq doom-font (font-spec :family "IosevkaNerdFontMono" :size 24)
+                                        ;(set-face-attribute 'default nil :font "IosevkaNerdFontMono" :weight 'light :height 240)
+                                        ;(set-face-attribute 'fixed-pitch nil :font "IosevkaNerdFontMono" :weight 'light :height 260)
+                                        ;(set-face-attribute 'variable-pitch nil :font "IosevkaNerdFont" :weight 'light :height 1.6)
+      ;;
+      ;; See 'C-h v doom-font' for documentation and more examples of what they
+      ;; accept. For example:
+      ;;
+      ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
+      ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
+      ;; refresh your font settings. If Emacs still can't find your font, it likely
+      ;; wasn't installed correctly. Font issues are rarely Doom issues!
 
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-;(setq doom-theme 'catppuccin)
-;(setq catppuccin-flavor 'mocha)
-;(load-theme 'catppuccin t t)
+      ;; There are two ways to load a theme. Both assume the theme is installed and
+      ;; available. You can either set `doom-theme' or manually load a theme with the
+      ;; `load-theme' function. This is the default:
+                                        ;(setq doom-theme 'catppuccin)
+                                        ;(setq catppuccin-flavor 'mocha)
+                                        ;(load-theme 'catppuccin t t)
 
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+      ;; This determines the style of line numbers in effect. If set to `nil', line
+      ;; numbers are disabled. For relative line numbers, set this to `relative'.
+      display-line-numbers-type 'relative)
 
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
+(after! org
+  (setq
+   org-export-with-toc nil
+   org-export-with-drawers nil
+   org-export-with-properties nil
+   org-export-with-todo-keywords nil
+   org-export-with-tags nil
+   org-export-with-priority nil
+   org-export-with-timestamps nil
+   org-export-with-section-numbers nil
+   org-export-with-sub-superscripts nil
+   org-html-postamble nil))
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -86,22 +91,8 @@
 
 ;;navigation, windows and tabs
 
-;term
-(map! :n "SPC b t" #'term)
-;tabs
-(setq tab-bar-close-button-show nil)
-(setq tab-bar-tab-hints t)
-(setq tab-bar-format '(tab-bar-format-tabs tab-bar-separator))
 
-
-(dotimes (i 10)
-  (map! :n (format "C-%d" i) #'tab-bar-select-tab))
-
-(map! :n "SPC t n" #'tab-new)
-(map! :n "SPC t k" #'tab-close)
-(map! :n "SPC t c" #'tab-duplicate)
-(map! :n "SPC t d" #'tab-duplicate)
-;splits
+;; splits
 (map! :n "SPC C--" #'(lambda () (interactive) (split-window-vertically) (windmove-down)))
 (map! :n "SPC -" #'(lambda () (interactive) (split-window-horizontally) (windmove-right)))
 
@@ -110,21 +101,13 @@
 (map! :n "C-k" #'windmove-up)
 (map! :n "C-j" #'windmove-down)
 
-;; Org
-
-(map! :n "SPC o p s" #'org-present)
-(map! :n "SPC o p n" #'org-present-next)
-(map! :n "SPC o p p" #'org-present-prev)
-(map! :n "SPC o p q" #'org-present-quit)
-
 (after! plantuml-mode
-  ;; Set the include path via the Java system property
   (setq plantuml-jar-args
         (list "-Djava.awt.headless=true"
-              (concat "-Dplantuml.include.path=" (expand-file-name "~/.config/plantuml"))
-              ;; You can add other PlantUML arguments here if needed
-        ))
-  ;(setq plantuml-jar-path "/path/to/plantuml.jar")
-)
-;(set-face-attribute 'org-document-title nil :font "IosevkaNerdFont" :weight 'bold :height 1.3)
-;; Make sure certain org faces use the fixed-pitch face when variable-pitch-mode is on
+              (concat "-Dplantuml.include.path=~/.config/plantuml"))))
+
+
+(after! ox-gfm
+  (map! :n "SPC m g f m" #'org-gfm-export-to-markdown)
+
+  )
