@@ -96,16 +96,41 @@
 (map! :n "SPC C--" #'(lambda () (interactive) (split-window-vertically) (windmove-down)))
 (map! :n "SPC -" #'(lambda () (interactive) (split-window-horizontally) (windmove-right)))
 
-(map! :n "C-h" #'windmove-left)
-(map! :n "C-l" #'windmove-right)
-(map! :n "C-k" #'windmove-up)
-(map! :n "C-j" #'windmove-down)
+(defmacro tmux-nav (direction)
+  (pcase-let* ((dir-str (symbol-name direction))
+               (fname (intern (concat "tmux-nav-" dir-str)))
+               (windmove (intern (concat "windmove-" dir-str)))
+               (`(,key ,tmux-flag)
+                (pcase direction
+                  ('left  '("h" "L"))
+                  ('right '("l" "R"))
+                  ('up    '("k" "U"))
+                  ('down  '("j" "D")))))
+    `(progn
+       (defun ,fname ()
+         (interactive)
+         (cond
+          ((equal major-mode 'vterm-mode)
+           (vterm-send-key ,key nil nil t ))
+
+          (t
+           (condition-case nil
+               (windmove)
+             (error
+              (call-process "tmux" nil nil nil "select-pane" ,(concat "-" tmux-flag)))))))
+
+       (map! ,(concat "C-"   key)   #',fname)
+       (map! ,(concat "C-S-" key) #',windmove))))
+
+(tmux-nav left)
+(tmux-nav down)
+(tmux-nav up)
+(tmux-nav right)
 
 (after! plantuml-mode
   (setq plantuml-jar-args
         (list "-Djava.awt.headless=true"
               (concat "-Dplantuml.include.path=~/.config/plantuml"))))
-
 
 (after! ox-gfm
   (map! :n "SPC m g f m" #'org-gfm-export-to-markdown)
