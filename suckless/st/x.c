@@ -58,6 +58,7 @@ typedef struct {
 static void clipcopy(const Arg *);
 static void clippaste(const Arg *);
 static void numlock(const Arg *);
+static void sendkeys(const Arg *arg);
 static void selpaste(const Arg *);
 static void zoom(const Arg *);
 static void zoomabs(const Arg *);
@@ -71,6 +72,7 @@ static void togglegrdebug(const Arg *);
 static void dumpgrstate(const Arg *);
 static void unloadimages(const Arg *);
 static void toggleimages(const Arg *);
+
 
 /* config.h for applying patches and the configuration. */
 #include "config.h"
@@ -2549,4 +2551,8 @@ run:
 	run();
 
 	return 0;
+}
+
+void sendkeys(const Arg *arg) {
+    ttywrite(arg->s, strlen(arg->s), 0);
 }
