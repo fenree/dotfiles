@@ -29,6 +29,7 @@ local function bvm(x, y) m('v', x, y, o_snr) end
 vim.pack.add({
 	{ src = "https://github.com/Saghen/blink.cmp"},
 	{ src = "https://github.com/catppuccin/nvim"},
+	{ src = "https://github.com/christoomey/vim-tmux-navigator"},
 	{ src = "https://github.com/folke/snacks.nvim"},
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
 	{ src = "https://github.com/neovim/nvim-lspconfig"},
@@ -65,10 +66,10 @@ require 'blink.cmp'.setup {
 	completion = { documentation = { auto_show = true } },
 	keymap = { preset = 'default' },
     sources = { default = { 'lsp', 'path', 'snippets', 'buffer' }, },
-    fuzzy = { implementation = "prefer_rust_with_warning" }
+    fuzzy = { implementation = "lua" }
 }
 
-require 'nvim-treesitter.configs'.setup {
+require 'nvim-treesitter.config'.setup {
 		highlight = { 
 			enable = true,
 			additional_vim_regex_highlighting = false, 
@@ -101,13 +102,6 @@ lsc('clangd', {
 })
 lse('clangd')
 
-lsc('tsserver', {
-	cmd = { 'typescript-language-server', '--stdio' },
-	filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
-	root_markers = { 'package.json', 'tsconfig.json', '.git' },
-})
-lse('tsserver')
-
 lsc('luals', {
 	cmd = { 'lua-language-server' },
 	filetypes = { 'lua' },
@@ -125,6 +119,7 @@ lse('luals')
 -- OPTIONS --
 vo.autoindent     = true
 vo.autoread       = true
+vo.clipboard      = 'unnamedplus'
 vo.conceallevel   = 2
 vo.concealcursor  = 'n'
 vo.diffopt        = "internal,filler,closeoff,indent-heuristic,inline:char,linematch:40,vertical"
@@ -146,7 +141,7 @@ hl(0, "LineNrBelow", { fg = "#89dceb" })
 hl(0, "LineNr", { fg = "#fab387" })
 --hl(0, "Normal", { bg = "1e1e2e" })
 hl(0, "NormalFloat", { bg = "none" })
---hl(0, "StatusLine", { bg = "1e1e2e" })
+hl(0, "StatusLine", { bg = "none" })
 
 -- keys --
 vim.g.mapleader = " "
@@ -174,10 +169,14 @@ nm('<leader>mm',':make<CR>')
 nm('<leader>mc',':make clean<CR>')
 nm('<leader>mr',':make run<CR>')
 
--- buffers
+-- buffers / panes
 nm('<leader>bk',':bd<CR>')
 nm('<leader>bp',':bp<CR>')
 nm('<leader>bn',':bn<CR>')
+nm('<C-h>',':TmuxNavigateLeft<CR>')
+nm('<C-l>',':TmuxNavigateRight<CR>')
+nm('<C-k>',':TmuxNavigateUp<CR>')
+nm('<C-j>',':TmuxNavigateDown<CR>')
 
 nm('<ESC>',':nohlsearch<CR>')
 
@@ -192,11 +191,16 @@ local table = {
 
 for x, y in pairs(table) do
 	im(x, x .. y .. '<Left>')
+	im(x .. '<CR>', x ..  '<CR><CR>'.. y .. '<Up>    ')
 	im(x .. '<BS>', x)
 end
 
-imr('<Tab>', '<Esc>/[)\\}"\'>]<CR><ESC>a')
-imr('<S-Tab>', '<Esc>?[([{"\'<]<CR><ESC>a')
+vm('<leader>a', ':!awk \'\'<Left>')
+vm('<leader>n', ':norm ')
+
+
+nmr('<Tab>', '<Esc>/[)\\}"\'>]<CR><ESC>a')
+nmr('<S-Tab>', '<Esc>?[([{"\'<]<CR><ESC>a')
 
 -- AUTO CMDS -- 
 local root_markers = { '.git', '.clangd', 'Makefile'}
