@@ -1,31 +1,58 @@
 [[ $- != *i* ]] && return
 
-if [[ -r /usr/share/bash-completion/bash_completion ]]; then
-  . /usr/share/bash-completion/bash_completion
-fi
+eval $(dircolors ~/.dircolors 2>/dev/null)
+eval $(zoxide init bash 2>/dev/null)
 
-eval $(dircolors ~/.dircolors)
+export VISUAL=/bin/nvim
+export EDITOR=$VISUAL
 
+for opt in     \
+    direxpand  \
+    dirspell   \
+    extglob    \
+    globstar   \
+    histappend 
+do 
+    shopt -s $opt 
+done
 
-shopt -s checkwinsize
-shopt -s globstar
-shopt -s histappend
+for script in \
+    /usr/share/bash-completion/bash_completion* \
+    ~/.config/{.bash*,nnn/.nnnrc}
+do
+    . $script 2>/dev/null
+done
 
-. ~/.config/.bash_aliases
-. ~/.config/.bash_git
-. ~/.config/.bash_jumps
-. ~/.config/nnn/.nnnrc
 
 HISTCONTROL=ignoreboth
 HISTSIZE=1000
 HISTFILESIZE=2000
 HISTIGNORE="ls:ll:cd:pwd:clear"
-PROMPT_COMMAND='PS1_CMD1=$(__git_ps1 " %s")'; PS1='\[\e[38;5;114;1m\]\u\[\e[0m\] \[\e[38;5;114;1m\]󰄛\[\e[0m\]  \[\e[38;5;111;1m\]\h\[\e[0m\] \[\e[38;5;202;1m\]${PS1_CMD1}\n\[\e[0;38;5;225m\]\w\[\e[0m\] \$ '
+PROMPT_COMMAND='PS1_CMD1=$(__git_ps1 " %s")' 
+PS1='\[\e[38;5;114;1m\]\u\[\e[0m\] \[\e[38;5;114;1m\]󰄛\[\e[0m\]  \[\e[38;5;111;1m\]\h\[\e[0m\] \[\e[38;5;202;1m\]${PS1_CMD1}\n\[\e[0;38;5;225m\]\w\[\e[0m\] \$ '
 
 export NNN_COLORS="#04020301;4231"
 export NNN_FCOLORS="030304020705050801060301"
 
-if [ ! -d "$HOME/.cfg" ]; then
-	git init --bare $HOME/.cfg
-	/usr/bin/git --git-dir="$HOME/.cfg" --work-tree="$HOME" config --local status.showUntrackedFiles no
+if [ ! -d "$HOME/dotfiles" ]; then
+	git init --bare $HOME/dotfiles
+	/usr/bin/git --git-dir="$HOME/dotfiles" --work-tree="$HOME" config --local status.showUntrackedFiles no
 fi
+
+alias cfg="git --git-dir=$HOME/.cfg --work-tree=$HOME"
+
+bind -r \C-p
+bind -r \C-n
+mkcd() {
+    mkdir -p $@ && cd ${!#}
+}
+
+j() {
+    P=$(fd . ${1:-$PWD} | fzf)
+	if [ -d $P ]; then 
+		pushd $P 
+	elif [ -r $P ]; then
+		$VISUAL $P
+	fi	
+}
+
