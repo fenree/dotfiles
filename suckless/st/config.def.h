@@ -243,8 +243,8 @@ static Shortcut shortcuts[] = {
 	{TERMMOD, XK_F7, unloadimages, {.i = 0}},
 	{TERMMOD, XK_F8, toggleimages, {.i = 0}},
 	{TERMMOD, XK_F9, externalpipe, {.v = writetofilecmd}},
-{TERMMOD, XK_U, sendkeys, {.s = "pushd ..\n"}},
-{TERMMOD, XK_O, sendkeys, {.s = "popd\n"}},
+	{TERMMOD, XK_U, sendkeys, {.s = "pushd ..\n"}},
+	{TERMMOD, XK_O, sendkeys, {.s = "popd\n"}},
 };
 
 /*
