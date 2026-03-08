@@ -1,0 +1,63 @@
+# silence
+set bell-style none
+
+# completion
+set colored-completion-prefix on
+set colored-stats on
+set completion-map-case on
+set completion-ignore-case on
+set completion-query-items 200
+set mark-directories on
+set mark-symlinked-directories on
+set match-hidden-files off
+set page-completions off
+set show-all-if-ambiguous on
+set skip-completed-text on
+set visible-stats on
+
+# movement
+set blink-matching-paren on
+set editing-mode vi
+
+# keys
+set meta-flag on
+set input-meta on
+set output-meta on
+set convert-meta off
+
+$if mode=vi
+	set show-mode-in-prompt on
+	set vi-cmd-mode-string "\1\e[2 q\2"   # block cursor
+	set vi-ins-mode-string "\1\e[6 q\2"   # beam cursor
+	set keymap vi-insert
+    "\C-l": clear-screen
+    "\C-w": backward-kill-word
+    "\C-a": beginning-of-line
+    "\C-e": end-of-line
+$endif
+
+$if mode=emacs
+# for linux console and RH/Debian xterm
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
+"\e[5~": beginning-of-history
+"\e[6~": end-of-history
+"\e[7~": beginning-of-line
+"\e[5C": forward-word
+"\e[5D": backward-word
+"\e\e[C": forward-word
+"\e\e[D": backward-word
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+# for rxvt
+"\e[8~": end-of-line
+
+# for non RH/Debian xterm, can't hurt for RH/DEbian xterm
+"\eOH": beginning-of-line
+"\eOF": end-of-line
+
+# for freebsd console
+"\e[H": beginning-of-line
+"\e[F": end-of-line
+$endif
+

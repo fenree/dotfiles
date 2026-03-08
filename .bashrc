@@ -23,6 +23,7 @@ do
     . $script 2>/dev/null
 done
 
+bind 'set mark-directories on'
 
 HISTCONTROL=ignoreboth
 HISTSIZE=1000
@@ -43,6 +44,7 @@ alias cfg="git --git-dir=$HOME/.cfg --work-tree=$HOME"
 
 bind -r \C-p
 bind -r \C-n
+
 mkcd() {
     mkdir -p $@ && cd ${!#}
 }
