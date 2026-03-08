@@ -5,8 +5,9 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font =
-	"IosevkaNerdFontPropo:pixelsize=30:antialias=true:autohint=true";
+static char *font = "-freetype-iosevka nfm-medium-r-normal--27-200-96-96-p-129-iso10646-1";
+
+//static char *font = "IosevkaNFM-Regular";
 static int borderpx = 2;
 
 /* How to align the content in the window when the size of the terminal
@@ -236,15 +237,12 @@ static Shortcut shortcuts[] = {
 	{TERMMOD, XK_V, clippaste, {.i = 0}},
 	{TERMMOD, XK_Y, selpaste, {.i = 0}},
 	{ShiftMask, XK_Insert, selpaste, {.i = 0}},
-	{ShiftMask, XK_Page_Up, kscrollup, {.i = -1}},
-	{ShiftMask, XK_Page_Down, kscrolldown, {.i = -1}},
 	{TERMMOD, XK_F1, togglegrdebug, {.i = 0}},
 	{TERMMOD, XK_F6, dumpgrstate, {.i = 0}},
 	{TERMMOD, XK_F7, unloadimages, {.i = 0}},
 	{TERMMOD, XK_F8, toggleimages, {.i = 0}},
-	{TERMMOD, XK_F9, externalpipe, {.v = writetofilecmd}},
-{TERMMOD, XK_U, sendkeys, {.s = "pushd ..\n"}},
-{TERMMOD, XK_O, sendkeys, {.s = "popd\n"}},
+	{TERMMOD, XK_U, sendkeys, {.s = "pushd ..\n"}},
+	{TERMMOD, XK_O, sendkeys, {.s = "popd\n"}},
 };
 
 /*

@@ -21,7 +21,7 @@ static const char *colors[][3] = {
 
 static const char *const autostart[] = {
     "wmname", "LG3D",
-    NULL,     "/usr/local/bin/hsetroot",
+    NULL,     "hsetroot",
     "-cover", "/home/zephyr/suckless/dwm/wallpapers/catppuccin_triangle.png",
     NULL,     NULL /* terminate */
 };
