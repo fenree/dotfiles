@@ -8,7 +8,9 @@ cache="$cachedir/dmenu_run" # this is just a textfile
 
 IFS=: 
 if stest -dqr -n "$cache" $PATH; then # -n checks if any directories in $cache are newer than values in $PATH
-	sh -c $(IFS=: stest -flx $PATH | tee "$cache" | fzf --algo=v1 --ansi --tiebreak=length)
+	PROG=$((IFS=:; stest -flx $PATH) | tee "$cache" | fzf --algo=v1 --ansi --tiebreak=length)
 else
-	sh -c $(cat "$cache" | fzf --algo=v1 --ansi --tiebreak=length)
+	PROG=$(cat "$cache" | fzf --algo=v1 --ansi --tiebreak=length)
 fi
+[ -n "$PROG" ] && setsid "$PROG" &
+sleep 0

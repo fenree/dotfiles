@@ -119,7 +119,7 @@ static const Key keys[] = {
 	{MODKEY, XK_v, spawn, CMD(SCRIPT(vim-everywhere))},
     {MODKEY | ShiftMask, XK_Return, spawn, {.v = termcmd}},
     {MODKEY, XK_e, spawn, {.v = edcmd}},
-    {MODKEY, XK_b, spawn, CMD("qutebrowser")},
+    {MODKEY, XK_b, spawn, CMD("floorp")},
 	{MODKEY, XK_v, spawn, CMD(SCRIPT(vied))},
     //{MODKEY, XK_b, togglebar, {0}},
     {MODKEY, XK_j, focusstack, {.i = +1}},
