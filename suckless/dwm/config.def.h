@@ -102,10 +102,12 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] =
     "0"; /* component  of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = {
-    "dmenu_run", "-m",      dmenumon, "-fn",    dmenufont, "-nb",     col_black,
-    "-nf",       col_white, "-sb",    col_mauve, "-sf",     col_white, NULL};
-static const char *termcmd[] = { "st", "-e", "tmux", NULL};
+
+static const char *dmenucmd[] = { "st", "-t", "float", "-g", "50x13", "-e", SCRIPT(stmenu.sh), NULL};
+
+//static const char *dmenucmd[] = {    "dmenu_run", "-m",      dmenumon, "-fn",    dmenufont, "-nb",     col_black, "-nf",       col_white, "-sb",    col_mauve, "-sf",     col_white, NULL};
+
+static const char *termcmd[] = {"st", "-e", "tmux", NULL};
 static const char *edcmd[] = {"st", "-t", "float", "-e", "nvim", NULL};
 
 static const char *browsercmd[] = {"qutebrowser", NULL};
