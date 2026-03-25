@@ -1,0 +1,10 @@
+--ignored-suffix='.tmp'
+--ignored-suffix='.backup'
+--ignored-suffix='.old'
+#--map-syntax='.bb*:INI'
+--map-syntax='.ignore:Git Ignore'
+--theme dark
+--theme="Catppuccin Mocha"
+--style="numbers,changes,header"
+--strip-ansi=auto
+
