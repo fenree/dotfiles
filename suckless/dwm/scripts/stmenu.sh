@@ -13,4 +13,4 @@ else
 	PROG=$(cat "$cache" | fzf --algo=v1 --ansi --tiebreak=length)
 fi
 [ -n "$PROG" ] && setsid "$PROG" &
-sleep 0
+sleep 0.1
