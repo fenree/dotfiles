@@ -1,6 +1,17 @@
-syntax on
-set termguicolors
+" term settings
+silent !echo -ne "\e[2 q" " need -ne to avoid newline and to add backslash escape interpretation
+let &t_EI="\e[2 q"
+let &t_SI="\e[6 q"
+let &t_SR="\e[4 q"
 set t_Co=256
+set ttimeout
+set ttimeoutlen=10
+set termguicolors
+set number
+set rnu
+
+" colors :D
+syntax on
 hi Normal guisp=NONE guifg=#CDD6F4 guibg=#1E1E2E gui=NONE cterm=NONE 
 hi Visual guisp=NONE guifg=NONE guibg=#45475A gui=bold cterm=bold 
 hi Conceal guisp=NONE guifg=#7F849C guibg=NONE gui=NONE cterm=NONE 
