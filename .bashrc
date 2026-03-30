@@ -1,10 +1,10 @@
 [[ $- != *i* ]] && return
 
+[ -r ~/.dircolors ] || dircolors -p > ~/.dircolors
 eval $(dircolors ~/.dircolors 2>/dev/null)
 
 export VISUAL=/bin/nvim
 export EDITOR=$VISUAL
-
 
 for opt in     \
     direxpand  \
@@ -17,13 +17,16 @@ do
 done
 
 for script in \
+	/usr/share/fzf/*.bash \
     /usr/share/bash-completion/bash_completion* \
     ~/.config/{.bash*,nnn/.nnnrc}
 do
     . $script 2>/dev/null
 done
 
-bind 'set mark-directories on'
+
+export FZF_DEFAULT_COMMAND="fd -c always -td -tf --no-require-git '.*'"
+export FZF_DEFAULT_OPTS="--tmux --algo=v1 --ansi --tiebreak=length --tail 100000"
 
 HISTCONTROL=ignoreboth
 HISTSIZE=1000

@@ -3,14 +3,17 @@ mkcd() {
 }
 
 j() {
+	local FZF_OLD_DEFAULT_COMMAND="$FZF_DEFAULT_COMMAND"
 	export FZF_DEFAULT_COMMAND="fd -c always -d 5 -td -tf --no-require-git '.*'"
-    P=$(fzf-tmux --algo=v1 --ansi --tiebreak=length --tail 100000)
+    P=$(fzf --tmux --algo=v1 --ansi --tiebreak=length --tail 100000)
 	if [ -d $P ]; then 
 		pushd $P 2>/dev/null
 	elif [ -r $P ]; then
 		$VISUAL $P
 	fi	
+	export FZF_DEFAULT_COMMAND="$FZF_OLD_DEFAULT_COMMAND"
 }
+
 jd() {
     
 (RELOAD='reload:rg --column --color=always --smart-case {q} || :'
@@ -26,9 +29,9 @@ jd() {
 frg() (
   RELOAD='reload:rg'" -j$(nproc) "'--column --color=always --smart-case {q} || :'
   OPENER='if [[ $FZF_SELECT_COUNT -eq 0 ]]; then
-            vim {1} +{2}     # No selection. Open the current line in Vim.
+            nvim {1} +{2}     # No selection. Open the current line in Vim.
           else
-            vim +cw -q {+f}  # Build quickfix list for the selected items.
+            nvim +cw -q {+f}  # Build quickfix list for the selected items.
           fi'
   fzf --disabled --ansi --multi \
       --bind "start:$RELOAD" --bind "change:$RELOAD" \
@@ -40,5 +43,4 @@ frg() (
       --preview-window '~4,+{2}+4/3,<80(up)' \
       --query "$*"
 )
-}
 
