@@ -1,8 +1,10 @@
-" term settings
-silent !echo -ne "\e[2 q" " need -ne to avoid newline and to add backslash escape interpretation
-let &t_EI="\e[2 q"
-let &t_SI="\e[6 q"
-let &t_SR="\e[4 q"
+vim9script
+# need -ne to avoid newline and to add backslash escape interpretation
+silent !echo -ne "\e[2 q" 
+## term settings
+&t_EI = "\e[2 q"
+&t_SI = "\e[6 q"
+&t_SR = "\e[4 q"
 set t_Co=256
 set ttimeout
 set ttimeoutlen=10
@@ -10,7 +12,25 @@ set termguicolors
 set number
 set rnu
 
-" colors :D
+g:mapleader = ' '
+call plug#begin()
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'christoomey/vim-tmux-navigator'
+call plug#end()
+
+nnoremap <leader>fc :e ~/.vimrc<CR>
+nnoremap <leader>rcv :e ~/.vimrc<CR>
+nnoremap <leader>rcb :e ~/.bashrc<CR>
+
+g:tmux_navigator_no_mappings = 1
+nnoremap <silent> <c-h> :<C-U>TmuxNavigateLeft<cr>
+nnoremap <silent> <c-j> :<C-U>TmuxNavigateDown<cr>
+nnoremap <silent> <c-k> :<C-U>TmuxNavigateUp<cr>
+nnoremap <silent> <c-l> :<C-U>TmuxNavigateRight<cr>
+nnoremap <silent> <c--> :<C-U>TmuxNavigatePrevious<cr>
+
+
 syntax on
 hi Normal guisp=NONE guifg=#CDD6F4 guibg=#1E1E2E gui=NONE cterm=NONE 
 hi Visual guisp=NONE guifg=NONE guibg=#45475A gui=bold cterm=bold 
@@ -104,7 +124,7 @@ hi link StatusLineTermNC StatusLineNC
 hi link Terminal Normal
 hi link Ignore Comment
 
-let g:terminal_ansi_colors = [
+g:terminal_ansi_colors = [
   \ "#45475A", "#F38BA8", "#A6E3A1", "#F9E2AF", "#89B4FA", "#F5C2E7", "#94E2D5", "#BAC2DE",
   \ "#585B70", "#F38BA8", "#A6E3A1", "#F9E2AF", "#89B4FA", "#F5C2E7", "#94E2D5", "#A6ADC8"
 \ ]
