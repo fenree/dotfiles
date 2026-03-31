@@ -2,9 +2,22 @@ mkcd() {
     mkdir -p $@ && cd ${!#}
 }
 
+fdrc() {	
+
+    pushd "$HOME" >/dev/null
+    fd -c always -d 1 -sH -tf -j$(nproc) '^\..*(rc|\.conf)' -E '*.backup' -E '*.tmp'
+    fd -c always -d 2 -sH -tf -j$(nproc) '\.(rc|conf|vim|lua)$' -E '*.backup' -E '*.tmp' '.config/'
+    popd >/dev/null
+}
+
+edrc() {
+	vim $(fdrc | fzf --tmux --algo=v1 --ansi --tiebreak=length --tail 100000)
+}
+
+
 j() {
 	local FZF_OLD_DEFAULT_COMMAND="$FZF_DEFAULT_COMMAND"
-	export FZF_DEFAULT_COMMAND="fd -c always -d 5 -td -tf --no-require-git '.*'"
+	export FZF_DEFAULT_COMMAND="fd -c always -d 5 -td -tf -j$(nproc) --no-require-git '.*'"
     P=$(fzf --tmux --algo=v1 --ansi --tiebreak=length --tail 100000)
 	if [ -d $P ]; then 
 		pushd $P 2>/dev/null
