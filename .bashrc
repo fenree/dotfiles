@@ -18,15 +18,15 @@ done
 
 for script in \
 	/usr/share/fzf/*.bash \
-    /usr/share/bash-completion/bash_completion* \
-    ~/.config/{.bash*,nnn/.nnnrc}
+    /usr/share/bash-completion/completions/* \
+    ~/.config/.bash*
 do
     . $script 2>/dev/null
 done
 
 
 export FZF_DEFAULT_COMMAND="fd -c always -td -tf --no-require-git '.*'"
-export FZF_DEFAULT_OPTS="--tmux --algo=v1 --ansi --tiebreak=length --tail 100000"
+export FZF_DEFAULT_OPTS="--tmux 80% --algo=v1 --ansi --tiebreak=length --tail 100000"
 
 HISTCONTROL=ignoreboth
 HISTSIZE=1000

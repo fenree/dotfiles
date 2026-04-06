@@ -5,13 +5,25 @@ silent !echo -ne "\e[2 q"
 &t_EI = "\e[2 q"
 &t_SI = "\e[6 q"
 &t_SR = "\e[4 q"
+set autoindent
+set autoread
+set clipboard=unnamedplus
+set conceallevel=2
+set concealcursor=n
+set diffopt=internal,filler,closeoff,indent-heuristic,inline:char,linematch:40,vertical
+set formatoptions=cnm
+set noswapfile
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
 set t_Co=256
 set ttimeout
 set ttimeoutlen=10
 set termguicolors
 set number
 set rnu
-
+set cscopetag
+set csto=0
 g:mapleader = ' '
 call plug#begin()
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -19,9 +31,18 @@ Plug 'junegunn/fzf.vim'
 Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 
-nnoremap <leader>fc :e ~/.vimrc<CR>
-nnoremap <leader>rcv :e ~/.vimrc<CR>
-nnoremap <leader>rcb :e ~/.bashrc<CR>
+nnoremap <leader>rc :let f=trim(system('~/tools/edrc'))<CR>:if f != '' \| execute 'e' f \| endif<CR><CR>
+
+# Optional: open results in the quickfix window automatically
+
+autocmd QuickFixCmdPost cscope silent! copen
+if filereadable("cscope.out")
+  silent! cs kill -1
+  silent! cs add cscope.out
+endif
+nnoremap <leader>cfi :cs find i 
+nnoremap <leader>cft :cs find i 
+nnoremap <silent> <leader>cc :cs find c <C-R>=expand('<cword>')<CR><CR>
 
 g:tmux_navigator_no_mappings = 1
 nnoremap <silent> <c-h> :<C-U>TmuxNavigateLeft<cr>

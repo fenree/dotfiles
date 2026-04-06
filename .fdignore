@@ -1,2 +1,7 @@
+.config/QtProject.conf
+.config/BambuStudio/
+.config/Raspberry Pi/
+.config/qBittorrent/
 .floorp/
 .local/
+.cache/
