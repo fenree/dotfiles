@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+shopt -s extglob
+echo "~/$((for f in ~/{?(.)?(*conf?(ig)|*rc|dircolors),.config/*/?(*conf*|*init*|*rc)}; do echo "${f##~/}"; done) | fzf --preview "bat --style=full --color=always {}")"
