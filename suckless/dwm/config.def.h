@@ -49,6 +49,7 @@ static Rule rules[] = {
     {"xterm-kitty",  NULL,  "float",  0, 1,  1,  -1,  ""},
     {"Kicad",  NULL,  NULL,  0, 0,  0,  -1,  ""},
     {"Firefox",  NULL,  NULL,  1 << 1, 0,  0,  -1,  "󰈹"},
+    {"floorp",  NULL,  NULL,  1 << 1, 0,  0,  -1,  "󰈹"},
     {"zen-twilight",  NULL,  NULL,  1 << 1, 0,  0,  -1,  "󰈹"},
     {"qutebrowser",  NULL,  NULL,  1 << 1, 0,  0,  -1,  ""},
     {"mpv",  NULL,  NULL,  1 << 1, 1,  1,  -1,  "󰐎"},
