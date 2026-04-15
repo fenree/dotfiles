@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
+[ "$1" = "nvim" ] && printf ':e '
 shopt -s extglob
 echo "~/$((for f in ~/{?(.)?(*conf?(ig)|*rc|dircolors),.config/*/?(*conf*|*init*|*rc)}; do echo "${f##~/}"; done) | fzf --preview "bat --style=full --color=always {}")"
