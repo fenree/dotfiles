@@ -48,8 +48,8 @@ frg() {
     fzf "${C[@]}" --bind "enter:become:echo {3..}"
   else
     fzf "${C[@]}" --with-nth=1,2 --bind \
-	    'enter:become:[ $FZF_SELECT_COUNT -eq 0 ] && vim {1} +{2} || vim +cw -q {+f}'\
-	--preview 'bat --style=full --color=always --highlight-line {2} {1}'\
+	    'enter:become:[ $FZF_SELECT_COUNT -eq 0 ] && vim {1} +{2} || vim +cw -q {+f}' \
+		--bind 'ctrl-g:execute:git blame {1} -L {2},{2} | awk "{print\$1}"' --preview 'bat --style=full --color=always --highlight-line {2} {1}' \
 	--preview-window "~4,+{2}+4/3,<80(right)"
   fi
 }
