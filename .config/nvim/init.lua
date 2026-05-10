@@ -18,6 +18,15 @@ vo.softtabstop    = 4
 vo.tabstop        = 4
 vo.winborder      = "rounded"
 
+local va = vim.api
+local hl = va.nvim_set_hl
+hl(0, "LineNrAbove", { fg = "#89dceb" })
+hl(0, "LineNrBelow", { fg = "#89dceb" })
+hl(0, "LineNr", { fg = "#fab387" })
+hl(0, "NormalFloat", { bg = "none" })
+hl(0, "StatusLine", { bg = "none" })
+
+
 -- PLUGINS --
 local gh = "https://github.com/"
 vim.pack.add({
@@ -28,14 +37,7 @@ vim.pack.add({
 
 -- COLORSCHEME --
 local c = vim.cmd
-local va = vim.api
-local hl = va.nvim_set_hl
 c.colorscheme("catppuccin")
-hl(0, "LineNrAbove", { fg = "#89dceb" })
-hl(0, "LineNrBelow", { fg = "#89dceb" })
-hl(0, "LineNr", { fg = "#fab387" })
-hl(0, "NormalFloat", { bg = "none" })
-hl(0, "StatusLine", { bg = "none" })
 
 -- HELPERS --
 require 'nvim-treesitter.config'.setup {
@@ -57,7 +59,6 @@ require 'nvim-treesitter.config'.setup {
 						 'gitattributes',
 						 'gitcommit',
 						 'gitignore',
-						 'hyprlang',
 						 'ini',
 						 'json',
 						 'jq',

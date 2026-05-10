@@ -1,4 +1,4 @@
-alias fdrc='for f in ~/{.*{.,git}conf*,.*rc*,.config/*/{*conf*,*init*,.*zsh*}}; do echo ${f##~/}; done'
+alias fdrc='for f in ~/{.*{.,git}conf*,.*rc*,.config/*/{*conf*,*init*,*lua*,.*zsh*}}; do echo ${f##~/}; done'
 alias edrc='fdrc | fzf --bind "enter:become:'$EDITOR' ~/{1}" --preview "bat --style=full --color always ~/{}"'
 for a in ecd ecr erc ecr ecrd erdc edcr derc decr; do alias $a=edrc; done
 
