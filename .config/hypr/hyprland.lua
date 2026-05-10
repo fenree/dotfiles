@@ -15,8 +15,85 @@ hl.monitor({
 
 local terminal = "foot"
 local fileManager = "dolphin"
-local menu = "foot -e ~/suckless/dwm/scripts/stmenu.sh"
+local menu = "foot -T float -e ~/suckless/dwm/scripts/stmenu.sh"
 
+local rosewater = "rgb(f5e0dc)"
+local rosewaterAlpha = "rgba(f5e0dcaa)"
+
+local flamingo = "rgb(f2cdcd)"
+local flamingoAlpha = "rgba(f2cdcdaa)"
+
+local pink = "rgb(f5c2e7)"
+local pinkAlpha = "rgba(f5c2e7aa)"
+
+local mauve = "rgb(cba6f7)"
+local mauveAlpha = "rgba(cba6f7aa)"
+
+local red = "rgb(f38ba8)"
+local redAlpha = "rgba(f38ba8aa)"
+
+local maroon = "rgb(eba0ac)"
+local maroonAlpha = "rgba(eba0acaa)"
+
+local peach = "rgb(fab387)"
+local peachAlpha = "rgba(fab387aa)"
+
+local yellow = "rgb(f9e2af)"
+local yellowAlpha = "rgba(f9e2afaa)"
+
+local green = "rgb(a6e3a1)"
+local greenAlpha = "rgba(a6e3a1aa)"
+
+local teal = "rgb(94e2d5)"
+local tealAlpha = "rgba(94e2d5aa)"
+
+local sky = "rgb(89dceb)"
+local skyAlpha = "rgba(89dcebaa)"
+
+local sapphire = "rgb(74c7ec)"
+local sapphireAlpha = "rgba(74c7ecaa)"
+
+local blue = "rgb(89b4fa)"
+local blueAlpha = "rgba(89b4faaa)"
+
+local lavender = "rgb(b4befe)"
+local lavenderAlpha = "rgba(b4befeaa)"
+
+local text = "rgb(cdd6f4)"
+local textAlpha = "rgba(cdd6f4aa)"
+
+local subtext1 = "rgb(bac2de)"
+local subtext1Alpha = "rgba(bac2deaa)"
+
+local subtext0 = "rgb(a6adc8)"
+local subtext0Alpha = "rgba(a6adc8aa)"
+
+local overlay2 = "rgb(9399b2)"
+local overlay2Alpha = "rgba(9399b2aa)"
+
+local overlay1 = "rgb(7f849c)"
+local overlay1Alpha = "rgba(7f849caa)"
+
+local overlay0 = "rgb(6c7086)"
+local overlay0Alpha = "rgba(6c7086aa)"
+
+local surface2 = "rgb(585b70)"
+local surface2Alpha = "rgba(585b70aa)"
+
+local surface1 = "rgb(45475a)"
+local surface1Alpha = "rgba(45475aaa)"
+
+local surface0 = "rgb(313244)"
+local surface0Alpha = "rgba(313244aa)"
+
+local base = "rgb(1e1e2e)"
+local baseAlpha = "rgba(1e1e2eaa)"
+
+local mantle = "rgb(181825)"
+local mantleAlpha = "rgba(181825aa)"
+
+local crust = "rgb(11111b)"
+local crustAlpha = "rgba(11111baa)"
 
 ---------------------------
 -- ENVIRONMENT VARIABLES --
@@ -28,28 +105,22 @@ hl.env("HYPRCURSOR_SIZE", 24)
 -------------------
 -- LOOK AND FEEL --
 -------------------
-
+local function gradient(col1, col2) return { colors = { col1, col2 }, angle = 45 } end
 hl.config({
     general = {
         gaps_in  = 15,
         gaps_out = 30,
-        border_size = 2,
-
-        col = {
-            active_border = {
-				colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 
-			},
-            inactive_border = "rgba(595959aa)",
-        },
-
+        border_size = 2,	
         resize_on_border = false,
         allow_tearing = false,
 		layout = "master",
+        col = {
+            active_border = gradient(mauve, mauveAlpha),
+            inactive_border = gradient(surface2, surface2Alpha),
+        },
     },
-
     decoration = {
-        rounding       = 0,
-        -- Change transparency of focused and unfocused windows
+        rounding         = 0,
         active_opacity   = 1.0,
         inactive_opacity = 1.0,
 
@@ -58,9 +129,7 @@ hl.config({
             range        = 4,
             render_power = 3,
             color        = 0xee1a1a1a,
-        },
-
-        blur = {
+        }, blur = {
             enabled   = true,
             size      = 3,
             passes    = 1,
@@ -73,18 +142,14 @@ hl.config({
     },
 	master = { new_status = master },
 	misc = {
-		force_default_wallpaper = -1, -- Set to 0 or 1 to disable the anime mascot wallpapers
-		disable_hyprland_logo = false, -- If true disables the random hyprland logo / anime girl background. :(
+		force_default_wallpaper = -1,
+		disable_hyprland_logo = false,
 	},
 	input = {
+		follow_mouse = 1,
 		kb_layout = "dk",
 		kb_variant = "nodeadkeys",
-
-		follow_mouse = 1,
-		sensitivity = 0, -- -1.0 - 1.0, 0 means no modification.
-		touchpad = {
-			natural_scroll = false
-		}
+		touchpad = { natural_scroll = false }
 	},
 })
 
@@ -123,30 +188,27 @@ local hd = hl.dsp
 local hdw = hd.window
 
 hl.bind("ALT + SHIFT + Return", hl.dsp.exec_cmd(terminal))
-hl.bind("ALT + SHIFT + C", hdw.close())
 hl.bind("ALT + M", hd.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch exit"))
 hl.bind("ALT + E", hd.exec_cmd(fileManager))
-hl.bind("ALT + F", hdw.float())
-hl.bind("ALT + R", hd.exec_cmd(menu))
-hl.bind("ALT + P", hdw.pseudo())
+hl.bind("ALT + P", hd.exec_cmd(menu))
 
+hl.bind("ALT + SHIFT + C", hdw.close())
+hl.bind("ALT + F", hdw.float())
+hl.bind("ALT + R", hdw.pseudo())
+
+hl.bind("ALT + H", hd.layout("mfact -0.1"))
+hl.bind("ALT + L", hd.layout("mfact +0.1"))
+hl.bind("ALT + J", hd.layout("cyclenext"))
+hl.bind("ALT + K", hd.layout("cycleprev"))
 hl.bind("ALT + Return", hd.layout("swapwithmaster"))
 
-hl.bind("ALT + h", hd.layout("mfact -0.1"))
-hl.bind("ALT + l", hd.layout("mfact +0.1"))
-hl.bind("ALT + j", hd.layout("cyclenext"))
-hl.bind("ALT + k", hd.layout("cycleprev"))
-
 for i = 1, 9 do
-    hl.bind("ALT" .. " + " .. i,             hd.focus({ workspace = i}))
-    hl.bind("ALT" .. " + SHIFT + " .. i,     hdw.move({ workspace = i }))
+    hl.bind("ALT" .. " + " .. i,         hd.focus({ workspace = i}))
+    hl.bind("ALT" .. " + SHIFT + " .. i, hdw.move({ workspace = i}))
 end
 hl.bind("ALT + S",         hd.workspace.toggle_special("magic"))
 hl.bind("ALT + SHIFT + S", hdw.move({ workspace = "special:magic" }))
 
--- Scroll through existing workspaces with mainMod + scroll
-hl.bind("ALT + mouse_down", hd.focus({ workspace = "e+1" }))
-hl.bind("ALT + mouse_up",   hd.focus({ workspace = "e-1" }))
 hl.bind("ALT + mouse:272", hdw.drag(), { mouse = true })
 hl.bind("ALT + mouse:273", hdw.resize(), { mouse = true })
 
@@ -187,12 +249,13 @@ hl.window_rule ({
 
 hl.window_rule ({
 	name = "make-floatwin-centered-and-small",
+	match = { initial_title = "float", },
+	float = true,
 })
 
 local suppressMaximizeRule = hl.window_rule({
     -- Ignore maximize requests from all apps. You'll probably like this.
     name  = "suppress-maximize-events",
     match = { class = ".*" },
-
     suppress_event = "maximize",
 })
