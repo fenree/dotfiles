@@ -31,29 +31,24 @@ hl.env("HYPRCURSOR_SIZE", 24)
 
 hl.config({
     general = {
-        gaps_in  = 5,
-        gaps_out = 20,
-
+        gaps_in  = 15,
+        gaps_out = 30,
         border_size = 2,
 
         col = {
-            active_border   = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
+            active_border = {
+				colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 
+			},
             inactive_border = "rgba(595959aa)",
         },
 
-        -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
         resize_on_border = false,
-
-        -- Please see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Tearing/ before you turn this on
         allow_tearing = false,
-
-        layout = "dwindle",
+		layout = "master",
     },
 
     decoration = {
-        rounding       = 10,
-        rounding_power = 2,
-
+        rounding       = 0,
         -- Change transparency of focused and unfocused windows
         active_opacity   = 1.0,
         inactive_opacity = 1.0,
@@ -76,95 +71,50 @@ hl.config({
     animations = {
         enabled = true,
     },
-	master = {
-		new_status = master
-	},
+	master = { new_status = master },
 	misc = {
 		force_default_wallpaper = -1, -- Set to 0 or 1 to disable the anime mascot wallpapers
 		disable_hyprland_logo = false, -- If true disables the random hyprland logo / anime girl background. :(
 	},
 	input = {
-		kb_layout = dk,
-		--    kb_variant =
-		--    kb_model =
-		--    kb_options =
-		--    kb_rules =
+		kb_layout = "dk",
+		kb_variant = "nodeadkeys",
 
 		follow_mouse = 1,
-
 		sensitivity = 0, -- -1.0 - 1.0, 0 means no modification.
-
 		touchpad = {
 			natural_scroll = false
 		}
 	},
-
-})
---local function hla(s1, speed, curve[, style]) = 
---        NAME,           X0,   Y0,   X1,   Y1
-hl.curve("easeOutQuint",   { type = "bezier", points =  {{ 0.23, 1    }, { 0.32, 1 }}})
-hl.curve("easeInOutCubic", { type = "bezier", points =  {{ 0.65, 0.05 }, { 0.36, 1 }}})
-hl.curve("linear",         { type = "bezier", points =  {{ 0,    0    }, { 1,    1 }}})
-hl.curve("almostLinear",   { type = "bezier", points =  {{ 0.5,  0.5  }, { 0.75, 1 }}})
-hl.curve("quick",          { type = "bezier", points =  {{ 0.15, 0    }, { 0.1,  1 }}})
-
---          NAME,          ONOFF, SPEED, CURVE,        [STYLE]
-hl.animation({ leaf  = "global",        enabled = true, speed = 10,   bezier = "default" })
-hl.animation({ leaf  = "border",        enabled = true, speed = 5.39, bezier = "easeOutQuint" })
-hl.animation({ leaf  = "windows",       enabled = true, speed = 4.79, bezier = "easeOutQuint" })
-hl.animation({ leaf  = "windowsIn",     enabled = true, speed = 4.1,  bezier = "easeOutQuint", style = "popin 87%" })
-hl.animation({ leaf  = "windowsOut",    enabled = true, speed = 1.49, bezier = "linear", style = "popin 87%" })
-hl.animation({ leaf  = "fadeIn",        enabled = true, speed = 1.73, bezier = "almostLinear" })
-hl.animation({ leaf  = "fadeOut",       enabled = true, speed = 1.46, bezier = "almostLinear" })
-hl.animation({ leaf  = "fade",          enabled = true, speed = 3.03, bezier = "quick" })
-hl.animation({ leaf  = "layers",        enabled = true, speed = 3.81, bezier = "easeOutQuint" })
-hl.animation({ leaf  = "layersIn",      enabled = true, speed = 4,    bezier = "easeOutQuint", style = "fade" })
-hl.animation({ leaf  = "layersOut",     enabled = true, speed = 1.5,  bezier = "linear", style = "fade" })
-hl.animation({ leaf  = "fadeLayersIn",  enabled = true, speed = 1.79, bezier = "almostLinear" })
-hl.animation({ leaf  = "fadeLayersOut", enabled = true, speed = 1.39, bezier = "almostLinear" })
-hl.animation({ leaf  = "workspaces",    enabled = true, speed = 1.94, bezier = "almostLinear", style = "fade" })
-hl.animation({ leaf  = "workspacesIn",  enabled = true, speed = 1.21, bezier = "almostLinear", style = "fade" })
-hl.animation({ leaf  = "workspacesOut", enabled = true, speed = 1.94, bezier = "almostLinear", style = "fade" })
-hl.animation({ leaf  = "zoomFactor",    enabled = true, speed = 7,    bezier = "quick" })
-
-
--- "Smart gaps" / "No gaps when only"
--- uncomment all if you wish to use that.
--- workspace = w[tv1], gapsout:0, gapsin:0
--- workspace = f[1], gapsout:0, gapsin:0
--- windowrule {
---     name = no-gaps-wtv1
---     match:float = false
---     match:workspace = w[tv1]
---
---     border_size = 0
---     rounding = 0
--- }
---
--- windowrule {
---     name = no-gaps-f1
---     match:float = false
---     match:workspace = f[1]
---
---     border_size = 0
---     rounding = 0
--- }
-
-
-
-
-
-
------------
--- INPUT --
------------
-
--- Example per-device config
-hl.device({
-    name        = "epic-mouse-v1",
-    sensitivity = -0.5,
 })
 
+local function hlc(str, t1, t2) hl.curve(str,   { type = "bezier", points =  {t1, t2}}) end
+--   NAME,              X0,   Y0,        X1,   Y1
+hlc("easeOutQuint",   { 0.23, 1    },  { 0.32, 1 })
+hlc("easeInOutCubic", { 0.65, 0.05 },  { 0.36, 1 })
+hlc("linear",         { 0,    0    },  { 1,    1 })
+hlc("almostLinear",   { 0.5,  0.5  },  { 0.75, 1 })
+hlc("quick",          { 0.15, 0    },  { 0.1,  1 })
+
+local function hla(str1, num, str2, style) hl.animation({ leaf = str1, enabled = true, speed = num, bezier = str2, style = style })  end
+--   NAME,           SPEED, CURVE,          [STYLE]
+hla("windowsIn",     4.1,   "easeOutQuint", "popin 87%")
+hla("windowsOut",    1.49,  "linear",       "popin 87%")
+hla("layersIn",      4,     "easeOutQuint", "fade")
+hla("layersOut",     1.5,   "linear",       "fade")
+hla("workspacesIn",  1.21,  "almostLinear", "fade")
+hla("workspacesOut", 1.94,  "almostLinear", "fade")
+hla("workspaces",    1.94,  "almostLinear", "fade")
+hla("global",        10,    "default")
+hla("border",        5.39,  "easeOutQuint")
+hla("windows",       4.79,  "easeOutQuint")
+hla("fadeIn",        1.73,  "almostLinear")
+hla("fadeOut",       1.46,  "almostLinear")
+hla("fade",          3.03,  "quick")
+hla("layers",        3.81,  "easeOutQuint")
+hla("fadeLayersIn",  1.79,  "almostLinear")
+hla("fadeLayersOut", 1.39,  "almostLinear")
+hla("zoomFactor",    7,     "quick")
 
 -----------------
 -- KEYBINDINGS --
@@ -187,52 +137,22 @@ hl.bind("ALT + l", hd.layout("mfact +0.1"))
 hl.bind("ALT + j", hd.layout("cyclenext"))
 hl.bind("ALT + k", hd.layout("cycleprev"))
 
-
-for i = 1, 10 do
-    local key = i % 10 -- 10 maps to key 0
-    hl.bind("ALT" .. " + " .. key,             hl.dsp.focus({ workspace = i}))
-    hl.bind("ALT" .. " + SHIFT + " .. key,     hl.dsp.window.move({ workspace = i }))
+for i = 1, 9 do
+    hl.bind("ALT" .. " + " .. i,             hd.focus({ workspace = i}))
+    hl.bind("ALT" .. " + SHIFT + " .. i,     hdw.move({ workspace = i }))
 end
--- Switch workspaces with mainMod + [0-9]
---hl.bind("ALT + 1", hd.focus({1,true}))
---hl.bind("ALT + 2", hd.focus({2,true}))
---hl.bind("ALT + 3", hd.focus({3,true}))
---hl.bind("ALT + 4", hd.focus({4,true}))
---hl.bind("ALT + 5", hd.focus({5,true}))
---hl.bind("ALT + 6", hd.focus({6,true}))
---hl.bind("ALT + 7", hd.focus({7,true}))
---hl.bind("ALT + 8", hd.focus({8,true}))
---hl.bind("ALT + 9", hd.focus({9,true}))
---hl.bind("ALT + 0", hd.focus({10,true}))
+hl.bind("ALT + S",         hd.workspace.toggle_special("magic"))
+hl.bind("ALT + SHIFT + S", hdw.move({ workspace = "special:magic" }))
 
-
-
--- Move active window to a workspace with mainMod + SHIFT + [0-9]
---hl.bind("LALT + SHIFT + 1", hdw.move({1, true}))
---hl.bind("LALT + SHIFT + 2", hdw.move({2, true}))
---hl.bind("LALT + SHIFT + 3", hdw.move({3, true}))
---hl.bind("LALT + SHIFT + 4", hdw.move({4, true}))
---hl.bind("LALT + SHIFT + 5", hdw.move({5, true}))
---hl.bind("LALT + SHIFT + 6", hdw.move({6, true}))
---hl.bind("LALT + SHIFT + 7", hdw.move({7, true}))
---hl.bind("LALT + SHIFT + 8", hdw.move({8, true}))
---hl.bind("LALT + SHIFT + 9", hdw.move({9, true}))
---hl.bind("LALT + SHIFT + 0", hdw.move({10, true}))
-
-
--- Example special workspace (scratchpad)
-hl.bind("ALT + S",         hl.dsp.workspace.toggle_special("magic"))
-hl.bind("ALT + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
 -- Scroll through existing workspaces with mainMod + scroll
-hl.bind("ALT + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
-hl.bind("ALT + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
-hl.bind("mouse:272", hdw.drag(), { mouse = true })
-hl.bind("mouse:273", hdw.resize(), { mouse = true })
+hl.bind("ALT + mouse_down", hd.focus({ workspace = "e+1" }))
+hl.bind("ALT + mouse_up",   hd.focus({ workspace = "e-1" }))
+hl.bind("ALT + mouse:272", hdw.drag(), { mouse = true })
+hl.bind("ALT + mouse:273", hdw.resize(), { mouse = true })
 
-----------------------------
--- WINDOWS AND WORKSPACES --
-----------------------------
-
+-----------
+-- RULES --
+-----------
 hl.window_rule ({
     -- Ignore maximize requests from all apps. You'll probably like this.
     name = "suppress-maximize-events",
@@ -268,6 +188,7 @@ hl.window_rule ({
 hl.window_rule ({
 	name = "make-floatwin-centered-and-small",
 })
+
 local suppressMaximizeRule = hl.window_rule({
     -- Ignore maximize requests from all apps. You'll probably like this.
     name  = "suppress-maximize-events",
