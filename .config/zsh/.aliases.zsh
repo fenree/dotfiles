@@ -2,6 +2,9 @@
 alias cat=bat
 alias grep=rg
 
+# navigation
+alias cwd='cd $(git rev-parse --show-toplevel)'
+alias crd='cd $(git rev-parse --show-toplevel)'
 
 # ls
 alias lh='ls --color=auto -plh'

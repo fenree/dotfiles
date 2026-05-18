@@ -26,9 +26,11 @@ cmdv bat && . /dev/stdin <<'EOF'
 	cmdv rg && alias bg='batgrep'
 EOF
 
+alias cwd='cd $(git rev-parse --show-toplevel)'
+alias crd='cd $(git rev-parse --show-toplevel)'
 
 
-alias fdpid="ps a --noheaders | dmenu | awk '{print $1}'"
+alias fdpid="ps a --noheaders | fzf | awk '{print $1}'"
 
 alias cfg='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'
 
