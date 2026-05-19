@@ -13,7 +13,7 @@ hl.monitor({
 -- MY PROGRAMS --
 -----------------
 
-local terminal = "foot -e tmux attach-session -t 0: || foot -e tmux"
+local terminal = "foot -e tmux new-session -As 0"
 local fileManager = "dolphin"
 local menu = "foot -T float -e ~/tools/stmenu.sh"
 
@@ -152,7 +152,7 @@ hl.bind("ALT + K", hd.layout("cycleprev"))
 hl.bind("ALT + Return", hd.layout("swapwithmaster"))
 
 for i = 1, 9 do
-    hl.bind("ALT" .. " + " .. i,         hd.focus({ workspace = i }))
+    hl.bind("ALT" .. " + " .. i, hd.focus({ workspace = i }))
     hl.bind("ALT" .. " + SHIFT + " .. i, hdw.move({ workspace = i, follow = true}))
 end
 hl.bind("ALT + T",         hd.workspace.toggle_special("terminal"))
