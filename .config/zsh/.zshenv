@@ -20,4 +20,4 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
 export FZF_DEFAULT_COMMAND="fd -c always -td -tf --no-require-git '.*'"
-export FZF_DEFAULT_OPTS="--tmux 80% --algo=v1 --ansi --tiebreak=length --tail 100000"
+export FZF_DEFAULT_OPTS="--algo=v1 --ansi --tiebreak=length --tail 100000"
