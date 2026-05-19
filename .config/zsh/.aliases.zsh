@@ -1,5 +1,8 @@
 # GNUtils
 alias cat=bat
+alias dmesg='sudo dmesg'
+alias reboot='sudo reboot'
+alias shutdown='sudo shutdown -h now'
 alias grep=rg
 
 # navigation
