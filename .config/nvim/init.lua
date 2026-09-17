@@ -1,17 +1,25 @@
 -- THE BASICS --
-local vo = vim.opt vo.autoindent     = true
+local vg = vim.g
+local vo = vim.opt
+
+vg.editorconfig   = true
+vo.autoindent     = true
 vo.autoread       = true
+vo.termguicolors  = false
 vo.clipboard      = 'unnamedplus'
 vo.conceallevel   = 2
 vo.concealcursor  = 'n'
 vo.diffopt        = "internal,filler,closeoff,indent-heuristic,inline:char,linematch:40,vertical"
+vo.exrc           = true
 vo.foldmethod     = 'expr'
-vo.foldexpr       = 'nvim_treesitter#foldexpr()'
-vo.foldenable     = false
+vo.foldexpr       = 'v:lua.vim.treesitter.foldexpr()'
+vo.foldenable     = true
+vo.foldlevel      = 99
 vo.formatoptions  = cnm
 vo.swapfile       = false
 vo.relativenumber = true
 vo.number         = true
+vo.secure         = true
 vo.shiftwidth     = 4
 vo.softtabstop    = 4
 vo.tabstop        = 4
@@ -28,63 +36,23 @@ hl(0, "StatusLine", { bg = "none" })
 -- PLUGINS --
 local gh = "https://github.com/"
 vim.pack.add({
-	gh .. "catppuccin/nvim",
+ 	gh .. "folke/snacks.nvim",
+	gh .. "bluz71/vim-moonfly-colors",
+	gh .. "OXY2DEV/markview.nvim",
 	gh .. "christoomey/vim-tmux-navigator",
 	gh .. "nvim-treesitter/nvim-treesitter" ,
 	gh .. 'neovim/nvim-lspconfig',
+	gh .. 'tpope/vim-dispatch',
+	gh .. 'ibhagwan/fzf-lua',
+	gh .. 'powerman/vim-plugin-AnsiEsc',
 })
 
 -- COLORSCHEME --
 local c = vim.cmd
-c.colorscheme("catppuccin")
+c.colorscheme("moonfly")
 
 -- HELPERS --
 require 'nvim-treesitter.config'.setup {
-	ensure_installed = { 'awk',
-						 'bash', 
-						 'bitbake',
-						 'c',
-						 'cmake',
-						 'comment',
-						 'cpp',
-						 'csv',
-						 'devicetree',
-						 'diff',
-						 'disassembly',
-						 'dockerfile',
-						 'doxygen',
-						 'git_config',
-						 'git_rebase',
-						 'gitattributes',
-						 'gitcommit',
-						 'gitignore',
-						 'ini',
-						 'json',
-						 'jq',
-						 'kconfig',
-						 'latex',
-						 'linkerscript',
-						 'lua',
-						 'make',
-						 'markdown',
-						 'markdown_inline',
-						 'python',
-						 'readline',
-						 'regex',
-						 'requirements', --pip
-						 'strace', -- .strace files
-						 'sshconfig', 
-						 'tmux',
-						 'toml',
-						 'typst',
-						 'udev',
-						 'vim',
-						 'vimdoc',
-						 'xml',
-						 'yaml',
-						 'zathurarc',
-						 'zsh', 
-					 },
 	highlight = { 
 		enable = true,
 		additional_vim_regex_highlighting = false, 
@@ -99,10 +67,41 @@ local vtl = vim.treesitter.language.register
 vtl('markdown_inline', 'md')
 vtl('python', 'py')
 vtl('json', 'json')
+--- MARKVIEW ---
+ require("markview").setup({
+   latex = {
+     enable = false,
+   },
+ })
+
+require 'snacks' .setup {
+       image = {
+               formats = {
+                       "png",
+                       "jpg",
+                       "jpeg",
+                       "webp",
+                       "pdf",
+               },
+               force = false,
+               doc = {
+                       enabled = true,
+                       -- only used if `opts.inline` is disabled
+                       float = true,
+                       max_width = 80,
+                       max_height = 40,
+                       conceal = function(lang, type)
+                               return type == "math"
+                       end,
+               },
+               img_dirs = { "img", "images", "assets", "static", "public", "media", "attachments" },
+       }
+}
+
+
 ---------
 -- LSP --
 ---------
-
 local lse = vim.lsp.enable
 local lsc = vim.lsp.config
 local lsb = vim.lsp.buf
@@ -133,12 +132,9 @@ lsc('luals', {
 	}
 })
 lse('luals')
-
 lse('pyright')
 
-
 -- KEYS --
-
 local m = va.nvim_set_keymap
 local function nm(x, y, r) m('n', x, y, {silent = true, noremap = not r}) end
 local function im(x, y, r) m('i', x, y, {silent = true, noremap = not r}) end
@@ -147,9 +143,20 @@ local function bnm(x, y, r, b) vim.keymap.set('n', x, y, {buffer = b, silent = t
 local function bim(x, y, r, b) vim.keymap.set('i', x, y, {buffer = b, silent = true, noremap = not r}) end
 local function bvm(x, y, r, b) vim.keymap.set('v', x, y, {buffer = b, silent = true, noremap = not r}) end
 
+-- STARTUP --
+local p = vim.fn.getcwd()
+for _ = 1, 5 do
+  if vim.fn.filereadable(p .. "/venv/bin/python") == 1 then
+  	vim.env.PATH = p .. "/venv/bin:" .. vim.env.PATH
+  	vim.env.VIRTUAL_ENV = p .. "/venv"
+	vim.fn.setenv("PATH", vim.env.PATH)
+	vim.fn.setenv("VIRTUAL_ENV", vim.env.VIRTUAL_ENV)
+  end
+  p = vim.fn.fnamemodify(p, ":h")
+end
 vim.g.mapleader = " "
 nm('<leader>rc', ':lua vim.cmd("e " .. vim.fn.system("$HOME/tools/edrc"))<CR>')
-nm('<leader>frg', ':lua vim.cmd(vim.fn.system("$HOME/tools/frg.sh"))<CR>')
+nm('<leader>frg', ':lua vim.cmd(vim.fn.system("~/tools/frg.sh -I --vim"))<CR>')
 
 -- make
 nm('<leader>mm',':make<CR>')
@@ -163,8 +170,8 @@ nm('<leader>bp',':bp<CR>')
 nm('<leader>bn',':bn<CR>')
 nm('<Tab>',':bn<CR>')
 nm('<S-Tab>',':bp<CR>')
-nm('-',':vs<CR>')
-nm('_',':sp<CR>')
+nm('-','<C-w>v')
+nm('_','<C-w>s')
 
 
 nm('<C-h>',':TmuxNavigateLeft<CR>')
@@ -180,9 +187,6 @@ nm('<leader>lN', ':lua vim.o.number = not vim.o.number<CR>')
 
 vm('<leader>a', ':!awk \'\'<Left>')
 vm('<leader>n', ':norm ')
--- why did i make this
---vm('<leader>i', ':s/\\(.$\\)/\\1<Left><Left>')
---vm('<leader>a', ':s/\\(^.\\)/\\1<Left><Left>')
 
 nm('<Tab>', '<Esc>/[)\\}"\'>]<CR><ESC>a', true)
 nm('<S-Tab>', '<Esc>?[([{"\'<]<CR><ESC>a', true)
@@ -192,7 +196,7 @@ nm('<S-Tab>', '<Esc>?[([{"\'<]<CR><ESC>a', true)
 local a = va.nvim_create_autocmd
 local vfs = vim.fs
 local vfn = vim.fn
-local root_markers = { '.git', '.clangd', 'Makefile'}
+local root_markers = { '.git', '.clangd', 'Makefile', 'platformio.ini'}
 -- possibly useful dunno
 a("BufEnter", {
 	callback = function()
@@ -202,7 +206,6 @@ a("BufEnter", {
 		end
 	end
 })
-
 
 a({'BufEnter', 'BufWinEnter'}, {
   pattern = '*.md',
@@ -217,11 +220,14 @@ a('LspAttach', {
 	callback = function(event)
 		bnm('gd',        ':lua vim.lsp.buf.definition()<CR>', false, event.buf)
 		bnm('gr',        ':lua vim.lsp.buf.references()<CR>', false, event.buf)
-		nm('gI',         ':lua vim.lsp.buf.implementation()<CR>')
-		nm('<leader>D',  ':lua vim.lsp.buf.type_definition()<CR>')
-		nm('<leader>rn', ':lua vim.lsp.buf.rename()<CR>')
-		nm('<leader>ca', ':lua vim.lsp.buf.code_action()<CR>')
-		nm('C-K',':lua vim.lsp.buf.hover()<CR>')
+		bnm('<leader>ldb', require('fzf-lua').diagnostics_document,  false, event.buf)
+		bnm('<leader>ldw', require('fzf-lua').diagnostics_workspace, false, event.buf)
+		bnm('gI',        ':lua vim.lsp.buf.implementation()<CR>', false, event.buf)
+		bnm('<leader>D', ':lua vim.lsp.buf.type_definition()<CR>', false, event.buf)
+		bnm('<leader>rn',':lua vim.lsp.buf.rename()<CR>', false, event.buf)
+		bnm('<leader>ca',':lua vim.lsp.buf.code_action()<CR>', false, event.buf)
+		bnm('C-K',       ':lua vim.lsp.buf.hover()<CR>', false, event.buf)
+		bnm('C-K',':lua vim.lsp.buf.hover()<CR>', false, event.buf)
 	end })
 
 a({ "BufRead", "BufNewFile" }, {
