@@ -133,6 +133,7 @@ lsc('luals', {
 })
 lse('luals')
 lse('pyright')
+lse('tinymist')
 
 -- KEYS --
 local m = va.nvim_set_keymap
@@ -196,16 +197,16 @@ nm('<S-Tab>', '<Esc>?[([{"\'<]<CR><ESC>a', true)
 local a = va.nvim_create_autocmd
 local vfs = vim.fs
 local vfn = vim.fn
-local root_markers = { '.git', '.clangd', 'Makefile', 'platformio.ini'}
--- possibly useful dunno
-a("BufEnter", {
-	callback = function()
-		local r = vfs.find(root_markers, { upward = true })[1]
-		if r then
-			vfn.chdir(vfs.dirname(r))
+
+
+a("BufEnter", { 
+	callback = function() 
+		root = vfs.root(0, { '.git', '.clangd', 'Makefile' } )
+		if root then
+			vfn.chdir(root)
+			vim.opt_local.path:append(root)
 		end
-	end
-})
+	end})
 
 a({'BufEnter', 'BufWinEnter'}, {
   pattern = '*.md',
